@@ -1,0 +1,43 @@
+name: movirehab
+description: "App de rehabilitación y seguimiento de ejercicios de movilidad"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.19.0
+
+  
+  sqflite: ^2.3.0
+  sqflite_common_ffi: ^2.3.0
+  path: ^1.8.3
+  path_provider: ^2.1.1
+
+  
+  speech_to_text: ^6.6.0
+  flutter_tts: ^3.8.3
+  google_mlkit_pose_detection: ^0.10.0
+  sensors_plus: ^5.0.0
+  permission_handler: ^11.0.1
+
+ 
+  go_router: ^13.0.0
+  
+  
+  movirehab_components:
+    path: ./packages/movirehab_components
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true 
