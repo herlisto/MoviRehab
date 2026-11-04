@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 
 /// Tarjeta para mostrar el resumen consolidado de una sesión completada.
 class SessionSummaryCard extends StatelessWidget {
+  final String title;
   final String sessionDate;
   final int totalExercises;
   final double avgDegrees;
-  final VoidCallback onShare;
+  final VoidCallback? onShare;
   final VoidCallback? onTap;
 
   const SessionSummaryCard({
     super.key,
+    this.title = 'Resumen de Sesión',
     required this.sessionDate,
     required this.totalExercises,
     required this.avgDegrees,

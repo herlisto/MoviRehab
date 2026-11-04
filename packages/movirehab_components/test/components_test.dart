@@ -52,11 +52,10 @@ void main() {
           home: Scaffold(
             body: SessionSummaryCard(
               title: "Sesión de Hombro",
-              dateText: "15/10/2026",
-              totalRepetitions: 15,
-              averageDegrees: 85.5,
-              onTap: () {
-                tapped = true;
+              sessionDate: "15/10/2026",
+              totalExercises: 15,
+              avgDegrees: 85.5,
+              onShare: () {
               },
             ),
           ),
