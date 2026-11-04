@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../models/ejercicio_model.dart';
+import '../models/medicion_model.dart';
 import '../services/database_helper.dart';
 
 class MoviRehabController with ChangeNotifier {

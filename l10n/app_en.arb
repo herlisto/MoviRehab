@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "appTitle": "MoviRehab",
+  "welcomeMessage": "Welcome to MoviRehab",
+  "rangeProgress": "Joint Range Progress",
+  "goalReached": "Mobility goal reached!"
+}
