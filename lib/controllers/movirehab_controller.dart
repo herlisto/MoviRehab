@@ -15,11 +15,18 @@ class MoviRehabController with ChangeNotifier {
   bool get isLoading => _isLoading;
 
   Future<void> cargarEjercicios() async {
-    _isLoading = true;
-    notifyListeners();
-    _ejercicios = await DatabaseHelper.instance.obtenerEjercicios();
-    _isLoading = false;
-    notifyListeners();
+    try {
+      _isLoading = true;
+      notifyListeners();
+
+      _ejercicios = await DatabaseHelper.instance.obtenerEjercicios();
+      _evolucion = await DatabaseHelper.instance.obtenerEvolucionPromedio();
+    } catch (e) {
+        debugPrint('Error al cargar SQLite: $e');
+    } finally {
+        _isLoading = false;
+        notifyListeners();
+    }
   }
 
   Future<void> cargarEstadisticas() async {

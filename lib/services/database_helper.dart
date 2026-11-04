@@ -29,12 +29,16 @@ class DatabaseHelper {
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON');
       },
       onCreate: _createDB,
-      onUpgrade: (db, oldVersion, newVersion) async {},
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await _createDB(db, newVersion);
+        }
+      },
     );
   }
 
@@ -79,20 +83,20 @@ class DatabaseHelper {
     await db.insert('usuario', {'alias': 'Paciente_Principal'});
 
     final ejerciciosDemo = [
-      {'nombre': 'Elevación lateral de hombro', 'articulacion': 'Hombro', 'objetivo_grados': 90},
-      {'nombre': 'Flexión de codo', 'articulacion': 'Codo', 'objetivo_grados': 135},
-      {'nombre': 'Rotación externa de hombro', 'articulacion': 'Hombro', 'objetivo_grados': 45},
-      {'nombre': 'Extensión de rodilla', 'articulacion': 'Rodilla', 'objetivo_grados': 120},
-      {'nombre': 'Flexión dorsal de tobillo', 'articulacion': 'Tobillo', 'objetivo_grados': 20},
-      {'nombre': 'Circunducción de muñeca', 'articulacion': 'Muñeca', 'objetivo_grados': 60},
-      {'nombre': 'Flexión de cadera', 'articulacion': 'Cadera', 'objetivo_grados': 90},
-      {'nombre': 'Apertura pectoral', 'articulacion': 'Hombro', 'objetivo_grados': 110},
-      {'nombre': 'Pronación de antebrazo', 'articulacion': 'Codo', 'objetivo_grados': 80},
-      {'nombre': 'Inclinación lateral cervical', 'articulacion': 'Cervical', 'objetivo_grados': 45},
+      EjercicioModel(nombre: 'Elevación lateral de hombro', articulacion: 'Hombro', objetivoGrados: 90),
+      EjercicioModel(nombre: 'Flexión de codo', articulacion: 'Codo', objetivoGrados: 135),
+      EjercicioModel(nombre: 'Rotación externa de hombro', articulacion: 'Hombro', objetivoGrados: 45),
+      EjercicioModel(nombre: 'Extensión de rodilla', articulacion: 'Rodilla', objetivoGrados: 120),
+      EjercicioModel(nombre: 'Flexión dorsal de tobillo', articulacion: 'Tobillo', objetivoGrados: 20),
+      EjercicioModel(nombre: 'Circunducción de muñeca', articulacion: 'Muñeca', objetivoGrados: 60),
+      EjercicioModel(nombre: 'Flexión de cadera', articulacion: 'Cadera', objetivoGrados: 90),
+      EjercicioModel(nombre: 'Apertura pectoral', articulacion: 'Hombro', objetivoGrados: 110),
+      EjercicioModel(nombre: 'Pronación de antebrazo', articulacion: 'Codo', objetivoGrados: 80),
+      EjercicioModel(nombre: 'Inclinación lateral cervical', articulacion: 'Cervical', objetivoGrados: 45),
     ];
 
     for (var ej in ejerciciosDemo) {
-      await db.insert('ejercicio', ej);
+      await db.insert('ejercicio', ej.toMap());
     }
 
     int sesionId = await db.insert('sesion', {
