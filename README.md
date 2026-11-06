@@ -50,7 +50,7 @@ La primera compilación de Android descarga Gradle (9.3.1) y puede tardar varios
 | Plataforma | Estado |
 | --- | --- |
 | Windows | ✅ Soportada (SQLite con `sqflite_common_ffi`). |
-| Android | ✅ Soportada (`sqflite` nativo). |
+| Android | ❌ Soportada (`sqflite` nativo). |
 | Web | ❌ No soportada (SQLite local y permisos no existen en navegador): la app muestra un aviso. |
 | iOS / macOS / Linux | No incluidas en el proyecto. Se añadirían con `flutter create --platforms=ios .` (etc.). |
 
