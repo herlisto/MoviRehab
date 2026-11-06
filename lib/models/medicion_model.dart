@@ -1,3 +1,4 @@
+/// Medición de un ejercicio dentro de una sesión.
 class MedicionModel {
   final int? id;
   final int sesionId;
@@ -5,7 +6,7 @@ class MedicionModel {
   final int grados;
   final int repeticiones;
 
-  MedicionModel({
+  const MedicionModel({
     this.id,
     required this.sesionId,
     required this.ejercicioId,

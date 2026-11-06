@@ -1,0 +1,81 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "MoviRehab",
+  "welcomeMessage": "Welcome to MoviRehab",
+  "rangeProgress": "Joint Range Progress",
+  "goalReached": "Mobility goal reached!",
+  "holdPosture": "Hold the posture to complete the angle.",
+
+  "homeTitle": "MoviRehab - Home",
+  "homeHeadline": "Joint Mobility Rehabilitation",
+  "menuProfile": "User Profile",
+  "menuPlan": "Exercise Plan",
+  "menuGuidedSession": "Guided Session (NUI)",
+  "menuProgress": "Progress and Averages",
+  "menuHistory": "Measurement History",
+  "menuSummary": "Session Summary",
+  "tooltipPrivacy": "Privacy notice",
+  "tooltipSettings": "Settings and permissions",
+
+  "profileTitle": "User Profile",
+  "profileId": "SQLite ID: {id}",
+
+  "planTitle": "Exercise Plan",
+  "planJoint": "Joint: {joint}",
+  "planEmpty": "There are no exercises in the plan.",
+
+  "detailTarget": "Target degrees: {degrees}°",
+  "detailSave": "Save",
+  "detailSaved": "Target updated",
+
+  "guidedTitle": "Guided Session (NUI)",
+  "guidedExercise": "Exercise",
+  "guidedSimulate": "Simulate Angle",
+  "guidedReset": "Reset",
+  "guidedSave": "Save measurement",
+  "guidedFinish": "Finish session",
+  "guidedRepetitions": "Repetitions: {count}",
+  "guidedSaved": "Measurement saved. Measurements in this session: {count}",
+  "guidedNothingToFinish": "Save at least one measurement to finish the session.",
+  "guidedSimulationNote": "Simulation: each tap adds 15° and 1 repetition.",
+  "guidedNoExercises": "There are no exercises in the plan.",
+
+  "summaryTitle": "Session Summary",
+  "summaryCardTitle": "Completed session",
+  "summaryExercises": "Exercises",
+  "summaryAverage": "Avg. Mobility",
+  "summaryShare": "Share",
+  "summaryEmpty": "There are no recorded sessions yet.",
+  "summaryCopied": "Summary copied to the clipboard",
+  "summaryShareText": "MoviRehab · Session {date}: {count, plural, =1{1 exercise} other{{count} exercises}}, average mobility {average}°",
+
+  "progressTitle": "Progress and Statistics",
+  "progressAverage": "Average: {degrees}°",
+  "progressReps": "Total repetitions: {count}",
+  "progressEmpty": "There are no recorded measurements yet.",
+
+  "historyTitle": "Measurement History",
+  "historyDate": "Date: {date}",
+  "historyReps": "{count} repetitions",
+  "historyEmpty": "There are no recorded measurements yet.",
+
+  "privacyTitle": "Privacy Notice",
+  "privacyBody": "Data is processed locally, respecting the user's privacy.",
+
+  "settingsTitle": "Settings and Permissions",
+  "permissionCamera": "Camera permission",
+  "permissionMicrophone": "Microphone permission",
+  "permissionGranted": "Granted",
+  "permissionDenied": "Denied",
+  "permissionPermanentlyDenied": "Permanently denied",
+  "permissionRestricted": "Restricted by the system",
+  "permissionNotApplicable": "Not applicable on this platform",
+  "permissionRequest": "Request",
+  "permissionOpenSettings": "Open settings",
+
+  "errorLoading": "The data could not be loaded.",
+  "errorSaving": "The changes could not be saved.",
+  "retry": "Retry",
+  "invalidExercise": "No exercise was specified."
+}

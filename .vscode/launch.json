@@ -1,0 +1,34 @@
+{
+  // Ejecutar con F5. Elige la configuración en el desplegable de "Ejecutar y depurar".
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "MoviRehab (Windows)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "windows"
+    },
+    {
+      "name": "MoviRehab (Android)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "android"
+    },
+    {
+      "name": "MoviRehab (dispositivo que elijas)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart"
+    },
+    {
+      "name": "MoviRehab (Windows, modo profile)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "windows",
+      "flutterMode": "profile"
+    }
+  ]
+}

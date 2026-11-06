@@ -1,15 +1,30 @@
+/// Ejercicio de movilidad articular del plan del paciente.
 class EjercicioModel {
   final int? id;
   final String nombre;
   final String articulacion;
   final int objetivoGrados;
 
-  EjercicioModel({
+  const EjercicioModel({
     this.id,
     required this.nombre,
     required this.articulacion,
     required this.objetivoGrados,
   });
+
+  EjercicioModel copyWith({
+    int? id,
+    String? nombre,
+    String? articulacion,
+    int? objetivoGrados,
+  }) {
+    return EjercicioModel(
+      id: id ?? this.id,
+      nombre: nombre ?? this.nombre,
+      articulacion: articulacion ?? this.articulacion,
+      objetivoGrados: objetivoGrados ?? this.objetivoGrados,
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return {

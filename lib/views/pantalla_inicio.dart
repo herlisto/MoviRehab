@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
+import '../routes.dart';
+
 class InicioScreen extends StatelessWidget {
   const InicioScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MoviRehab - Inicio'),
+        title: Text(l10n.homeTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.privacy_tip),
-            onPressed: () => Navigator.pushNamed(context, '/privacidad'),
+            tooltip: l10n.tooltipPrivacy,
+            onPressed: () => Navigator.pushNamed(context, Rutas.privacidad),
           ),
           IconButton(
             icon: const Icon(Icons.settings),
-            onPressed: () => Navigator.pushNamed(context, '/ajustes'),
+            tooltip: l10n.tooltipSettings,
+            onPressed: () => Navigator.pushNamed(context, Rutas.ajustes),
           ),
         ],
       ),
@@ -25,16 +32,22 @@ class InicioScreen extends StatelessWidget {
           children: [
             Card(
               color: Theme.of(context).colorScheme.primaryContainer,
-              child: const Padding(
-                padding: EdgeInsets.all(20.0),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    Icon(Icons.accessibility_new, size: 60),
-                    SizedBox(height: 10),
+                    const Icon(Icons.accessibility_new, size: 60),
+                    const SizedBox(height: 10),
                     Text(
-                      'Rehabilitación de Movilidad Articular',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      l10n.homeHeadline,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                    const SizedBox(height: 4),
+                    Text(l10n.welcomeMessage),
                   ],
                 ),
               ),
@@ -42,28 +55,33 @@ class InicioScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ListTile(
               leading: const Icon(Icons.person),
-              title: const Text('Perfil de Usuario'),
-              onTap: () => Navigator.pushNamed(context, '/perfil'),
+              title: Text(l10n.menuProfile),
+              onTap: () => Navigator.pushNamed(context, Rutas.perfil),
             ),
             ListTile(
               leading: const Icon(Icons.list),
-              title: const Text('Plan de Ejercicios'),
-              onTap: () => Navigator.pushNamed(context, '/plan'),
+              title: Text(l10n.menuPlan),
+              onTap: () => Navigator.pushNamed(context, Rutas.plan),
             ),
             ListTile(
-              leading: const Icon(Icons.camera),
-              title: const Text('Sesión Guiada NUI'),
-              onTap: () => Navigator.pushNamed(context, '/sesion_guiada'),
+              leading: const Icon(Icons.camera_alt),
+              title: Text(l10n.menuGuidedSession),
+              onTap: () => Navigator.pushNamed(context, Rutas.sesionGuiada),
+            ),
+            ListTile(
+              leading: const Icon(Icons.summarize),
+              title: Text(l10n.menuSummary),
+              onTap: () => Navigator.pushNamed(context, Rutas.resumen),
             ),
             ListTile(
               leading: const Icon(Icons.show_chart),
-              title: const Text('Progreso y Medias'),
-              onTap: () => Navigator.pushNamed(context, '/progreso'),
+              title: Text(l10n.menuProgress),
+              onTap: () => Navigator.pushNamed(context, Rutas.progreso),
             ),
             ListTile(
               leading: const Icon(Icons.history),
-              title: const Text('Historial de Mediciones'),
-              onTap: () => Navigator.pushNamed(context, '/historial'),
+              title: Text(l10n.menuHistory),
+              onTap: () => Navigator.pushNamed(context, Rutas.historial),
             ),
           ],
         ),

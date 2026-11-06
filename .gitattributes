@@ -1,0 +1,7 @@
+# Normaliza los finales de línea (el proyecto original mezclaba CRLF y LF).
+* text=auto
+*.dart text eol=lf
+*.arb text eol=lf
+*.yaml text eol=lf
+*.png binary
+*.ico binary

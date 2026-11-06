@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 /// Tarjeta para mostrar el resumen consolidado de una sesión completada.
+///
+/// Los textos ([title], [exercisesLabel], [averageLabel], [shareTooltip]) se
+/// pueden sustituir para localizarlos; por defecto están en español. Si
+/// [onShare] es `null` no se muestra el botón de compartir.
 class SessionSummaryCard extends StatelessWidget {
   final String title;
   final String sessionDate;
@@ -8,6 +12,13 @@ class SessionSummaryCard extends StatelessWidget {
   final double avgDegrees;
   final VoidCallback? onShare;
   final VoidCallback? onTap;
+  final String exercisesLabel;
+  final String averageLabel;
+  final String shareTooltip;
+
+  /// Formatea la media de grados (por ejemplo, con la coma decimal del idioma).
+  /// Por defecto: un decimal con punto y el símbolo de grados (`85.5°`).
+  final String Function(double degrees)? degreesFormatter;
 
   const SessionSummaryCard({
     super.key,
@@ -15,13 +26,24 @@ class SessionSummaryCard extends StatelessWidget {
     required this.sessionDate,
     required this.totalExercises,
     required this.avgDegrees,
-    required this.onShare,
+    this.onShare,
     this.onTap,
-  })  : assert(totalExercises >= 0, 'Total de ejercicios no puede ser negativo'),
-        assert(avgDegrees >= 0.0, 'Promedio de grados no puede ser negativo');
+    this.exercisesLabel = 'Ejercicios',
+    this.averageLabel = 'Movilidad Prom.',
+    this.shareTooltip = 'Compartir',
+    this.degreesFormatter,
+  }) : assert(totalExercises >= 0, 'Total de ejercicios no puede ser negativo'),
+       assert(avgDegrees >= 0.0, 'Promedio de grados no puede ser negativo');
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final formatter = degreesFormatter;
+    final averageText = formatter != null
+        ? formatter(avgDegrees)
+        : '${avgDegrees.toStringAsFixed(1)}°';
+
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -35,22 +57,34 @@ class SessionSummaryCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.event_available, color: Colors.teal),
-                      const SizedBox(width: 8),
-                      Text(
-                        sessionDate,
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
+                    ),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.share, color: Colors.teal),
-                    onPressed: onShare,
-                  )
+                  if (onShare != null)
+                    IconButton(
+                      icon: Icon(Icons.share, color: scheme.primary),
+                      tooltip: shareTooltip,
+                      onPressed: onShare,
+                    ),
+                ],
+              ),
+              Row(
+                children: [
+                  Icon(Icons.event_available, color: scheme.primary, size: 20),
+                  const SizedBox(width: 8),
+                  Text(
+                    sessionDate,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
               const Divider(),
@@ -59,13 +93,13 @@ class SessionSummaryCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _MetricItem(
-                    label: 'Ejercicios',
+                    label: exercisesLabel,
                     value: '$totalExercises',
                     icon: Icons.fitness_center,
                   ),
                   _MetricItem(
-                    label: 'Movilidad Prom.',
-                    value: '${avgDegrees.toStringAsFixed(1)}°',
+                    label: averageLabel,
+                    value: averageText,
                     icon: Icons.graphic_eq,
                   ),
                 ],
@@ -91,19 +125,24 @@ class _MetricItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Column(
       children: [
-        Icon(icon, color: Colors.grey.shade600, size: 20),
+        Icon(icon, color: scheme.onSurfaceVariant, size: 20),
         const SizedBox(height: 4),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.teal,
+            color: scheme.primary,
           ),
         ),
-        Text(label, style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
+        Text(
+          label,
+          style: TextStyle(fontSize: 12, color: scheme.onSurfaceVariant),
+        ),
       ],
     );
   }

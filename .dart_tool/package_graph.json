@@ -9,19 +9,16 @@
       "dependencies": [
         "flutter",
         "flutter_localizations",
-        "flutter_tts",
-        "go_router",
-        "google_mlkit_pose_detection",
         "intl",
+        "material_color_utilities",
         "movirehab_components",
         "path",
         "path_provider",
         "permission_handler",
         "provider",
-        "sensors_plus",
-        "speech_to_text",
         "sqflite",
-        "sqflite_common_ffi"
+        "sqflite_common_ffi",
+        "test_api"
       ],
       "devDependencies": [
         "flutter_lints",
@@ -54,6 +51,28 @@
       ]
     },
     {
+      "name": "test_api",
+      "version": "0.7.12",
+      "dependencies": [
+        "async",
+        "boolean_selector",
+        "collection",
+        "meta",
+        "source_span",
+        "stack_trace",
+        "stream_channel",
+        "string_scanner",
+        "term_glyph"
+      ]
+    },
+    {
+      "name": "material_color_utilities",
+      "version": "0.13.0",
+      "dependencies": [
+        "collection"
+      ]
+    },
+    {
       "name": "movirehab_components",
       "version": "1.0.0",
       "dependencies": [
@@ -70,19 +89,6 @@
       ]
     },
     {
-      "name": "go_router",
-      "version": "18.1.2",
-      "dependencies": [
-        "collection",
-        "cupertino_ui",
-        "flutter",
-        "flutter_web_plugins",
-        "logging",
-        "material_ui",
-        "meta"
-      ]
-    },
-    {
       "name": "permission_handler",
       "version": "13.0.2",
       "dependencies": [
@@ -93,45 +99,6 @@
         "permission_handler_html",
         "permission_handler_platform_interface",
         "permission_handler_windows"
-      ]
-    },
-    {
-      "name": "sensors_plus",
-      "version": "7.1.1",
-      "dependencies": [
-        "flutter",
-        "flutter_web_plugins",
-        "sensors_plus_platform_interface"
-      ]
-    },
-    {
-      "name": "google_mlkit_pose_detection",
-      "version": "0.16.1",
-      "dependencies": [
-        "flutter",
-        "google_mlkit_commons"
-      ]
-    },
-    {
-      "name": "flutter_tts",
-      "version": "4.2.5",
-      "dependencies": [
-        "flutter",
-        "flutter_web_plugins"
-      ]
-    },
-    {
-      "name": "speech_to_text",
-      "version": "7.5.0",
-      "dependencies": [
-        "clock",
-        "flutter",
-        "flutter_web_plugins",
-        "json_annotation",
-        "meta",
-        "speech_to_text_platform_interface",
-        "speech_to_text_windows",
-        "web"
       ]
     },
     {
@@ -218,7 +185,7 @@
     },
     {
       "name": "meta",
-      "version": "1.18.3",
+      "version": "1.19.0",
       "dependencies": []
     },
     {
@@ -239,7 +206,7 @@
     },
     {
       "name": "vector_math",
-      "version": "2.4.0",
+      "version": "2.4.4",
       "dependencies": []
     },
     {
@@ -274,18 +241,40 @@
       ]
     },
     {
-      "name": "test_api",
-      "version": "0.7.12",
+      "name": "term_glyph",
+      "version": "1.2.2",
+      "dependencies": []
+    },
+    {
+      "name": "string_scanner",
+      "version": "1.4.1",
       "dependencies": [
-        "async",
-        "boolean_selector",
+        "source_span"
+      ]
+    },
+    {
+      "name": "source_span",
+      "version": "1.10.2",
+      "dependencies": [
         "collection",
-        "meta",
-        "source_span",
-        "stack_trace",
-        "stream_channel",
-        "string_scanner",
+        "path",
         "term_glyph"
+      ]
+    },
+    {
+      "name": "boolean_selector",
+      "version": "2.1.2",
+      "dependencies": [
+        "source_span",
+        "string_scanner"
+      ]
+    },
+    {
+      "name": "async",
+      "version": "2.13.1",
+      "dependencies": [
+        "collection",
+        "meta"
       ]
     },
     {
@@ -293,41 +282,6 @@
       "version": "1.0.0",
       "dependencies": [
         "flutter"
-      ]
-    },
-    {
-      "name": "material_ui",
-      "version": "1.10.0",
-      "dependencies": [
-        "collection",
-        "cupertino_ui",
-        "flutter",
-        "flutter_localizations",
-        "intl",
-        "material_color_utilities",
-        "vector_math"
-      ]
-    },
-    {
-      "name": "logging",
-      "version": "1.3.0",
-      "dependencies": []
-    },
-    {
-      "name": "flutter_web_plugins",
-      "version": "0.0.0",
-      "dependencies": [
-        "flutter"
-      ]
-    },
-    {
-      "name": "cupertino_ui",
-      "version": "1.1.6",
-      "dependencies": [
-        "collection",
-        "flutter",
-        "flutter_localizations",
-        "intl"
       ]
     },
     {
@@ -341,7 +295,7 @@
     },
     {
       "name": "permission_handler_windows",
-      "version": "0.2.3",
+      "version": "0.2.4",
       "dependencies": [
         "flutter",
         "permission_handler_platform_interface"
@@ -372,52 +326,6 @@
       "dependencies": [
         "flutter",
         "permission_handler_platform_interface"
-      ]
-    },
-    {
-      "name": "sensors_plus_platform_interface",
-      "version": "2.0.2",
-      "dependencies": [
-        "flutter",
-        "logging",
-        "meta",
-        "plugin_platform_interface"
-      ]
-    },
-    {
-      "name": "google_mlkit_commons",
-      "version": "0.13.0",
-      "dependencies": [
-        "flutter"
-      ]
-    },
-    {
-      "name": "speech_to_text_windows",
-      "version": "1.0.1",
-      "dependencies": [
-        "flutter",
-        "speech_to_text_platform_interface"
-      ]
-    },
-    {
-      "name": "web",
-      "version": "1.1.2",
-      "dependencies": []
-    },
-    {
-      "name": "json_annotation",
-      "version": "4.12.0",
-      "dependencies": [
-        "meta"
-      ]
-    },
-    {
-      "name": "speech_to_text_platform_interface",
-      "version": "2.5.0",
-      "dependencies": [
-        "flutter",
-        "meta",
-        "plugin_platform_interface"
       ]
     },
     {
@@ -472,7 +380,7 @@
     },
     {
       "name": "synchronized",
-      "version": "3.5.0",
+      "version": "3.6.1",
       "dependencies": []
     },
     {
@@ -486,7 +394,7 @@
     },
     {
       "name": "sqlite3",
-      "version": "3.5.2",
+      "version": "3.9.0",
       "dependencies": [
         "code_assets",
         "collection",
@@ -538,24 +446,9 @@
       "dependencies": []
     },
     {
-      "name": "material_color_utilities",
-      "version": "0.13.0",
-      "dependencies": [
-        "collection"
-      ]
-    },
-    {
       "name": "characters",
       "version": "1.4.1",
       "dependencies": []
-    },
-    {
-      "name": "async",
-      "version": "2.13.1",
-      "dependencies": [
-        "collection",
-        "meta"
-      ]
     },
     {
       "name": "leak_tracker_testing",
@@ -578,39 +471,22 @@
       ]
     },
     {
-      "name": "term_glyph",
-      "version": "1.2.2",
-      "dependencies": []
-    },
-    {
-      "name": "string_scanner",
-      "version": "1.4.1",
-      "dependencies": [
-        "source_span"
-      ]
-    },
-    {
-      "name": "source_span",
-      "version": "1.10.2",
-      "dependencies": [
-        "collection",
-        "path",
-        "term_glyph"
-      ]
-    },
-    {
-      "name": "boolean_selector",
-      "version": "2.1.2",
-      "dependencies": [
-        "source_span",
-        "string_scanner"
-      ]
-    },
-    {
       "name": "plugin_platform_interface",
       "version": "2.1.8",
       "dependencies": [
         "meta"
+      ]
+    },
+    {
+      "name": "web",
+      "version": "1.1.2",
+      "dependencies": []
+    },
+    {
+      "name": "flutter_web_plugins",
+      "version": "0.0.0",
+      "dependencies": [
+        "flutter"
       ]
     },
     {
@@ -644,7 +520,7 @@
     },
     {
       "name": "objective_c",
-      "version": "9.5.0",
+      "version": "9.6.3",
       "dependencies": [
         "code_assets",
         "collection",
@@ -684,32 +560,34 @@
     },
     {
       "name": "native_toolchain_c",
-      "version": "0.19.2",
+      "version": "0.19.6",
       "dependencies": [
         "code_assets",
+        "file",
         "glob",
         "hooks",
         "logging",
         "meta",
+        "process",
         "pub_semver"
       ]
     },
     {
       "name": "code_assets",
-      "version": "1.2.1",
+      "version": "2.2.0",
       "dependencies": [
         "collection",
-        "hooks"
+        "hooks",
+        "logging"
       ]
     },
     {
       "name": "hooks",
-      "version": "2.0.2",
+      "version": "2.2.0",
       "dependencies": [
         "collection",
         "crypto",
         "logging",
-        "meta",
         "pub_semver",
         "record_use",
         "yaml"
@@ -735,6 +613,11 @@
       ]
     },
     {
+      "name": "logging",
+      "version": "1.3.0",
+      "dependencies": []
+    },
+    {
       "name": "package_config",
       "version": "3.0.0",
       "dependencies": [
@@ -754,6 +637,15 @@
       "dependencies": []
     },
     {
+      "name": "process",
+      "version": "5.0.6",
+      "dependencies": [
+        "file",
+        "path",
+        "platform"
+      ]
+    },
+    {
       "name": "glob",
       "version": "2.2.0",
       "dependencies": [
@@ -765,20 +657,20 @@
       ]
     },
     {
-      "name": "record_use",
-      "version": "0.6.0",
-      "dependencies": [
-        "collection",
-        "meta",
-        "pub_semver"
-      ]
-    },
-    {
       "name": "file",
       "version": "7.0.1",
       "dependencies": [
         "meta",
         "path"
+      ]
+    },
+    {
+      "name": "record_use",
+      "version": "1.1.1",
+      "dependencies": [
+        "collection",
+        "meta",
+        "pub_semver"
       ]
     }
   ],

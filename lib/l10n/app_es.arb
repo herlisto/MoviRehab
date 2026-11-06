@@ -1,0 +1,157 @@
+{
+  "@@locale": "es",
+
+  "appTitle": "MoviRehab",
+  "welcomeMessage": "Bienvenido a MoviRehab",
+  "rangeProgress": "Progreso Articular",
+  "goalReached": "¡Rango de movilidad completado!",
+  "holdPosture": "Mantén la postura para completar el ángulo.",
+
+  "homeTitle": "MoviRehab - Inicio",
+  "homeHeadline": "Rehabilitación de Movilidad Articular",
+  "menuProfile": "Perfil de Usuario",
+  "menuPlan": "Plan de Ejercicios",
+  "menuGuidedSession": "Sesión Guiada NUI",
+  "menuProgress": "Progreso y Medias",
+  "menuHistory": "Historial de Mediciones",
+  "menuSummary": "Resumen de Sesión",
+  "tooltipPrivacy": "Aviso de privacidad",
+  "tooltipSettings": "Ajustes y permisos",
+
+  "profileTitle": "Perfil de Usuario",
+  "profileId": "ID SQLite: {id}",
+  "@profileId": {
+    "placeholders": {
+      "id": {
+        "type": "int"
+      }
+    }
+  },
+
+  "planTitle": "Plan de Ejercicios",
+  "planJoint": "Articulación: {joint}",
+  "@planJoint": {
+    "placeholders": {
+      "joint": {
+        "type": "String"
+      }
+    }
+  },
+  "planEmpty": "No hay ejercicios en el plan.",
+
+  "detailTarget": "Grados objetivo: {degrees}°",
+  "@detailTarget": {
+    "placeholders": {
+      "degrees": {
+        "type": "int"
+      }
+    }
+  },
+  "detailSave": "Guardar",
+  "detailSaved": "Objetivo actualizado",
+
+  "guidedTitle": "Sesión Guiada (NUI)",
+  "guidedExercise": "Ejercicio",
+  "guidedSimulate": "Simular Ángulo",
+  "guidedReset": "Reiniciar",
+  "guidedSave": "Guardar medición",
+  "guidedFinish": "Finalizar sesión",
+  "guidedRepetitions": "Repeticiones: {count}",
+  "@guidedRepetitions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedSaved": "Medición guardada. Mediciones en esta sesión: {count}",
+  "@guidedSaved": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedNothingToFinish": "Guarda al menos una medición para finalizar la sesión.",
+  "guidedSimulationNote": "Simulación: cada pulsación suma 15° y 1 repetición.",
+  "guidedNoExercises": "No hay ejercicios en el plan.",
+
+  "summaryTitle": "Resumen de Sesión",
+  "summaryCardTitle": "Sesión completada",
+  "summaryExercises": "Ejercicios",
+  "summaryAverage": "Movilidad Prom.",
+  "summaryShare": "Compartir",
+  "summaryEmpty": "Todavía no hay sesiones registradas.",
+  "summaryCopied": "Resumen copiado al portapapeles",
+  "summaryShareText": "MoviRehab · Sesión {date}: {count, plural, =1{1 ejercicio} other{{count} ejercicios}}, movilidad media {average}°",
+  "@summaryShareText": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      },
+      "average": {
+        "type": "String"
+      }
+    }
+  },
+
+  "progressTitle": "Progreso y Estadísticas",
+  "progressAverage": "Media: {degrees}°",
+  "@progressAverage": {
+    "placeholders": {
+      "degrees": {
+        "type": "String"
+      }
+    }
+  },
+  "progressReps": "Repeticiones totales: {count}",
+  "@progressReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "progressEmpty": "Aún no hay mediciones registradas.",
+
+  "historyTitle": "Historial de Mediciones",
+  "historyDate": "Fecha: {date}",
+  "@historyDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "historyReps": "{count} repeticiones",
+  "@historyReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "historyEmpty": "Aún no hay mediciones registradas.",
+
+  "privacyTitle": "Aviso de Privacidad",
+  "privacyBody": "Tratamiento local de datos respetando la privacidad del usuario.",
+
+  "settingsTitle": "Ajustes y Permisos",
+  "permissionCamera": "Permiso de Cámara",
+  "permissionMicrophone": "Permiso de Micrófono",
+  "permissionGranted": "Concedido",
+  "permissionDenied": "Denegado",
+  "permissionPermanentlyDenied": "Denegado permanentemente",
+  "permissionRestricted": "Restringido por el sistema",
+  "permissionNotApplicable": "No aplica en esta plataforma",
+  "permissionRequest": "Solicitar",
+  "permissionOpenSettings": "Abrir ajustes",
+
+  "errorLoading": "No se han podido cargar los datos.",
+  "errorSaving": "No se han podido guardar los cambios.",
+  "retry": "Reintentar",
+  "invalidExercise": "No se ha indicado ningún ejercicio."
+}

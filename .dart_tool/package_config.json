@@ -33,7 +33,7 @@
     },
     {
       "name": "code_assets",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/code_assets-1.2.1",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/code_assets-2.2.0",
       "packageUri": "lib/",
       "languageVersion": "3.10"
     },
@@ -48,12 +48,6 @@
       "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.8",
       "packageUri": "lib/",
       "languageVersion": "3.4"
-    },
-    {
-      "name": "cupertino_ui",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_ui-1.1.6",
-      "packageUri": "lib/",
-      "languageVersion": "3.13"
     },
     {
       "name": "fake_async",
@@ -98,12 +92,6 @@
       "languageVersion": "3.11"
     },
     {
-      "name": "flutter_tts",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_tts-4.2.5",
-      "packageUri": "lib/",
-      "languageVersion": "3.4"
-    },
-    {
       "name": "flutter_web_plugins",
       "rootUri": "file:///C:/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
@@ -116,26 +104,8 @@
       "languageVersion": "3.3"
     },
     {
-      "name": "go_router",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/go_router-18.1.2",
-      "packageUri": "lib/",
-      "languageVersion": "3.12"
-    },
-    {
-      "name": "google_mlkit_commons",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/google_mlkit_commons-0.13.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.12"
-    },
-    {
-      "name": "google_mlkit_pose_detection",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/google_mlkit_pose_detection-0.16.1",
-      "packageUri": "lib/",
-      "languageVersion": "3.12"
-    },
-    {
       "name": "hooks",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/hooks-2.0.2",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/hooks-2.2.0",
       "packageUri": "lib/",
       "languageVersion": "3.10"
     },
@@ -162,12 +132,6 @@
       "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/jni_util-1.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.3"
-    },
-    {
-      "name": "json_annotation",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/json_annotation-4.12.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.9"
     },
     {
       "name": "leak_tracker",
@@ -212,14 +176,8 @@
       "languageVersion": "3.5"
     },
     {
-      "name": "material_ui",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/material_ui-1.10.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.13"
-    },
-    {
       "name": "meta",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.18.3",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.19.0",
       "packageUri": "lib/",
       "languageVersion": "3.5"
     },
@@ -227,11 +185,11 @@
       "name": "movirehab_components",
       "rootUri": "../packages/movirehab_components",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.13"
     },
     {
       "name": "native_toolchain_c",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/native_toolchain_c-0.19.2",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/native_toolchain_c-0.19.6",
       "packageUri": "lib/",
       "languageVersion": "3.10"
     },
@@ -243,7 +201,7 @@
     },
     {
       "name": "objective_c",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/objective_c-9.5.0",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/objective_c-9.6.3",
       "packageUri": "lib/",
       "languageVersion": "3.10"
     },
@@ -327,7 +285,7 @@
     },
     {
       "name": "permission_handler_windows",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/permission_handler_windows-0.2.3",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/permission_handler_windows-0.2.4",
       "packageUri": "lib/",
       "languageVersion": "3.6"
     },
@@ -344,6 +302,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "process",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/process-5.0.6",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
       "name": "provider",
       "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/provider-6.1.5+1",
       "packageUri": "lib/",
@@ -357,21 +321,9 @@
     },
     {
       "name": "record_use",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/record_use-0.6.0",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/record_use-1.1.1",
       "packageUri": "lib/",
       "languageVersion": "3.10"
-    },
-    {
-      "name": "sensors_plus",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/sensors_plus-7.1.1",
-      "packageUri": "lib/",
-      "languageVersion": "3.3"
-    },
-    {
-      "name": "sensors_plus_platform_interface",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/sensors_plus_platform_interface-2.0.2",
-      "packageUri": "lib/",
-      "languageVersion": "2.18"
     },
     {
       "name": "sky_engine",
@@ -384,24 +336,6 @@
       "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.10.2",
       "packageUri": "lib/",
       "languageVersion": "3.1"
-    },
-    {
-      "name": "speech_to_text",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/speech_to_text-7.5.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.12"
-    },
-    {
-      "name": "speech_to_text_platform_interface",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/speech_to_text_platform_interface-2.5.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
-    },
-    {
-      "name": "speech_to_text_windows",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/speech_to_text_windows-1.0.1",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
     },
     {
       "name": "sqflite",
@@ -441,7 +375,7 @@
     },
     {
       "name": "sqlite3",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/sqlite3-3.5.2",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/sqlite3-3.9.0",
       "packageUri": "lib/",
       "languageVersion": "3.10"
     },
@@ -465,7 +399,7 @@
     },
     {
       "name": "synchronized",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/synchronized-3.5.0",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/synchronized-3.6.1",
       "packageUri": "lib/",
       "languageVersion": "3.12"
     },
@@ -489,7 +423,7 @@
     },
     {
       "name": "vector_math",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.4.0",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.4.4",
       "packageUri": "lib/",
       "languageVersion": "3.10"
     },
@@ -521,7 +455,7 @@
       "name": "movirehab",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.13"
     }
   ],
   "generator": "pub",

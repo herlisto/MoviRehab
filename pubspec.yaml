@@ -4,14 +4,15 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ^3.13.0
+  flutter: ">=3.47.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  intl: 0.20.3
+  intl: ^0.20.3
 
   # Persistencia SQLite (Bloque C)
   sqflite: ^2.3.0
@@ -19,20 +20,17 @@ dependencies:
   path: ^1.8.3
   path_provider: ^2.1.1
 
-  # Interfaz Natural de Usuario - NUI (Bloque B)
-  speech_to_text: ^7.5.0
-  flutter_tts: ^4.2.5
-  google_mlkit_pose_detection: ^0.16.1
-  sensors_plus: ^7.1.1
+  # Permisos de cámara y micrófono (pantalla Ajustes y Permisos)
   permission_handler: ^13.0.2
 
-  # Navegación y estado (Bloque A)
-  go_router: ^18.1.2
+  # Estado (Bloque A)
   provider: ^6.1.1
 
   # Paquete de componentes visuales propios (Bloque D)
   movirehab_components:
     path: ./packages/movirehab_components
+  material_color_utilities: ^0.13.0
+  test_api: ^0.7.12
 
 dev_dependencies:
   flutter_test:
