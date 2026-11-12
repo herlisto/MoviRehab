@@ -339,7 +339,7 @@
     },
     {
       "name": "sqflite",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/sqflite-2.4.5",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/sqflite-2.4.5+1",
       "packageUri": "lib/",
       "languageVersion": "3.12"
     },
@@ -351,13 +351,13 @@
     },
     {
       "name": "sqflite_common",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/sqflite_common-2.5.15",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/sqflite_common-2.5.16",
       "packageUri": "lib/",
       "languageVersion": "3.12"
     },
     {
       "name": "sqflite_common_ffi",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/sqflite_common_ffi-2.4.5",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/sqflite_common_ffi-2.4.6",
       "packageUri": "lib/",
       "languageVersion": "3.12"
     },
@@ -369,13 +369,13 @@
     },
     {
       "name": "sqflite_platform_interface",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/sqflite_platform_interface-2.4.3",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/sqflite_platform_interface-2.4.4",
       "packageUri": "lib/",
       "languageVersion": "3.12"
     },
     {
       "name": "sqlite3",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/sqlite3-3.9.0",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/sqlite3-3.9.1",
       "packageUri": "lib/",
       "languageVersion": "3.10"
     },
@@ -399,7 +399,7 @@
     },
     {
       "name": "synchronized",
-      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/synchronized-3.6.1",
+      "rootUri": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache/hosted/pub.dev/synchronized-3.6.1+1",
       "packageUri": "lib/",
       "languageVersion": "3.12"
     },
@@ -459,8 +459,8 @@
     }
   ],
   "generator": "pub",
-  "generatorVersion": "3.13.4",
+  "generatorVersion": "3.13.7",
   "flutterRoot": "file:///C:/flutter",
-  "flutterVersion": "3.47.5",
+  "flutterVersion": "3.47.9",
   "pubCache": "file:///C:/Users/DAM2P/AppData/Local/Pub/Cache"
 }

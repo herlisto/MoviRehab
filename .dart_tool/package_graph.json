@@ -120,7 +120,7 @@
     },
     {
       "name": "sqflite_common_ffi",
-      "version": "2.4.5",
+      "version": "2.4.6",
       "dependencies": [
         "meta",
         "path",
@@ -131,7 +131,7 @@
     },
     {
       "name": "sqflite",
-      "version": "2.4.5",
+      "version": "2.4.5+1",
       "dependencies": [
         "flutter",
         "path",
@@ -380,12 +380,12 @@
     },
     {
       "name": "synchronized",
-      "version": "3.6.1",
+      "version": "3.6.1+1",
       "dependencies": []
     },
     {
       "name": "sqflite_common",
-      "version": "2.5.15",
+      "version": "2.5.16",
       "dependencies": [
         "meta",
         "path",
@@ -394,7 +394,7 @@
     },
     {
       "name": "sqlite3",
-      "version": "3.9.0",
+      "version": "3.9.1",
       "dependencies": [
         "code_assets",
         "collection",
@@ -410,7 +410,7 @@
     },
     {
       "name": "sqflite_platform_interface",
-      "version": "2.4.3",
+      "version": "2.4.4",
       "dependencies": [
         "flutter",
         "meta",
