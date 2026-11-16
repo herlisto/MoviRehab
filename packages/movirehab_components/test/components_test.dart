@@ -61,12 +61,12 @@ void main() {
     ) async {
       var avisos = 0;
       Widget gauge(int grados) => _envolver(
-            AngleGauge(
-              currentDegrees: grados,
-              targetDegrees: 90,
-              onTargetReached: () => avisos++,
-            ),
-          );
+        AngleGauge(
+          currentDegrees: grados,
+          targetDegrees: 90,
+          onTargetReached: () => avisos++,
+        ),
+      );
 
       await tester.pumpWidget(gauge(45));
       await tester.pumpAndSettle();
@@ -86,12 +86,12 @@ void main() {
     ) async {
       var avisos = 0;
       Widget gauge(int grados) => _envolver(
-            AngleGauge(
-              currentDegrees: grados,
-              targetDegrees: 90,
-              onTargetReached: () => avisos++,
-            ),
-          );
+        AngleGauge(
+          currentDegrees: grados,
+          targetDegrees: 90,
+          onTargetReached: () => avisos++,
+        ),
+      );
 
       await tester.pumpWidget(gauge(95));
       await tester.pumpAndSettle();

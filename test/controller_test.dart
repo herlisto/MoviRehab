@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:movirehab/controllers/movirehab_controller.dart';
+import 'package:movirehab/models/actividad_dia_model.dart';
 import 'package:movirehab/models/medicion_historial_model.dart';
+import 'package:movirehab/models/usuario_model.dart';
 
 import 'helpers/fake_repository.dart';
 
@@ -10,7 +12,10 @@ void main() {
 
   setUp(() {
     repositorio = FakeRepository();
-    controlador = MoviRehabController(repositorio: repositorio);
+    controlador = MoviRehabController(
+      repositorio: repositorio,
+      reloj: () => DateTime(2026, 11, 12),
+    );
   });
 
   tearDown(() => controlador.dispose());
@@ -54,7 +59,7 @@ void main() {
     });
 
     test('cargarHistorial no depende de haber abierto Progreso', () async {
-      repositorio.historial = [
+      repositorio.historialPorUsuario[1] = [
         const MedicionHistorialModel(
           id: 1,
           fecha: '2026-11-06',
@@ -250,5 +255,283 @@ void main() {
       expect(controlador.resumen, isNull);
       expect(controlador.hayError, isFalse);
     });
+  });
+
+  group('Ejercicios propios', () {
+    test('crearEjercicio lo guarda como personalizado y recarga', () async {
+      final resultado = await controlador.crearEjercicio(
+        nombre: '  Giro de   hombro ',
+        articulacion: 'Hombro',
+        objetivoGrados: 75,
+      );
+
+      expect(resultado, ResultadoGuardado.ok);
+      final creado = controlador.ejercicios.last;
+      expect(creado.nombre, 'Giro de hombro');
+      expect(creado.objetivoGrados, 75);
+      expect(creado.personalizado, isTrue);
+      expect(controlador.ejercicios, hasLength(3));
+    });
+
+    test('rechaza nombre vacío y grados fuera de rango', () async {
+      expect(
+        await controlador.crearEjercicio(
+          nombre: '   ',
+          articulacion: 'Codo',
+          objetivoGrados: 60,
+        ),
+        ResultadoGuardado.invalido,
+      );
+      expect(
+        await controlador.crearEjercicio(
+          nombre: 'Corto',
+          articulacion: 'Codo',
+          objetivoGrados: 5,
+        ),
+        ResultadoGuardado.invalido,
+      );
+      expect(
+        await controlador.crearEjercicio(
+          nombre: 'Largo',
+          articulacion: 'Codo',
+          objetivoGrados: 181,
+        ),
+        ResultadoGuardado.invalido,
+      );
+      expect(repositorio.ejercicios, hasLength(2));
+    });
+
+    test('rechaza un nombre repetido sin distinguir mayúsculas', () async {
+      final resultado = await controlador.crearEjercicio(
+        nombre: 'flexión dorsal de TOBILLO',
+        articulacion: 'Tobillo',
+        objetivoGrados: 20,
+      );
+
+      expect(resultado, ResultadoGuardado.duplicado);
+      expect(repositorio.ejercicios, hasLength(2));
+    });
+
+    test('devuelve error si falla el repositorio', () async {
+      repositorio.fallar = true;
+
+      final resultado = await controlador.crearEjercicio(
+        nombre: 'Nuevo',
+        articulacion: 'Cadera',
+        objetivoGrados: 50,
+      );
+
+      expect(resultado, ResultadoGuardado.error);
+      expect(controlador.isLoading, isFalse);
+    });
+  });
+
+  group('Usuarios', () {
+    test('el usuario activo se recuerda en los ajustes', () async {
+      await controlador.crearUsuario('Ana');
+
+      expect(controlador.usuario?.alias, 'Ana');
+      expect(
+        repositorio.ajustes[MoviRehabController.claveUsuarioActivo],
+        '${controlador.usuario?.id}',
+      );
+
+      // Un controlador nuevo recupera al usuario guardado.
+      final otro = MoviRehabController(repositorio: repositorio);
+      addTearDown(otro.dispose);
+      await otro.cargarUsuario();
+      expect(otro.usuario?.alias, 'Ana');
+    });
+
+    test(
+      'crearUsuario limpia el nombre y rechaza vacíos y repetidos',
+      () async {
+        expect(
+          await controlador.crearUsuario('  Luis   Pérez '),
+          ResultadoGuardado.ok,
+        );
+        expect(controlador.usuario?.alias, 'Luis Pérez');
+
+        expect(
+          await controlador.crearUsuario('   '),
+          ResultadoGuardado.invalido,
+        );
+        expect(
+          await controlador.crearUsuario('x' * 31),
+          ResultadoGuardado.invalido,
+        );
+        expect(
+          await controlador.crearUsuario('luis pérez'),
+          ResultadoGuardado.duplicado,
+        );
+        // «Paciente_Principal» se compara tal y como se muestra.
+        expect(
+          await controlador.crearUsuario('paciente principal'),
+          ResultadoGuardado.duplicado,
+        );
+        expect(repositorio.usuarios, hasLength(2));
+      },
+    );
+
+    test('seleccionarUsuario cambia el usuario y vacía sus datos', () async {
+      repositorio.historialPorUsuario[1] = [
+        const MedicionHistorialModel(
+          id: 1,
+          fecha: '2026-11-06',
+          ejercicio: 'Flexión de codo',
+          grados: 120,
+          repeticiones: 10,
+        ),
+      ];
+      await controlador.cargarHistorial();
+      await controlador.crearUsuario('Ana');
+      expect(controlador.historial, isEmpty);
+
+      await controlador.seleccionarUsuario(1);
+
+      expect(controlador.usuario?.id, 1);
+      await controlador.cargarHistorial();
+      expect(controlador.historial, hasLength(1));
+    });
+
+    test('cada usuario guarda sus sesiones por separado', () async {
+      await controlador.cargarUsuarios();
+      await controlador.crearUsuario('Ana');
+      final idAna = controlador.usuario!.id!;
+
+      await controlador.registrarMedicion(
+        ejercicioId: 1,
+        grados: 50,
+        repeticiones: 4,
+      );
+      await controlador.seleccionarUsuario(1);
+      await controlador.cargarUsuarios();
+
+      expect(repositorio.usuarioDeSesion[1], idAna);
+      final ana = controlador.usuarios.firstWhere((u) => u.usuario.id == idAna);
+      final principal = controlador.usuarios.firstWhere(
+        (u) => u.usuario.id == 1,
+      );
+      expect(ana.sesiones, 1);
+      expect(ana.mediciones, 1);
+      expect(principal.sesiones, 0);
+
+      await controlador.cargarResumen();
+      expect(controlador.resumen, isNull);
+    });
+
+    test('cargarHistorial acepta el usuario que se quiere consultar', () async {
+      repositorio.historialPorUsuario[7] = [
+        const MedicionHistorialModel(
+          id: 9,
+          fecha: '2026-11-10',
+          ejercicio: 'Extensión de rodilla',
+          grados: 100,
+          repeticiones: 8,
+        ),
+      ];
+
+      await controlador.cargarHistorial(usuarioId: 7);
+
+      expect(controlador.historial.single.grados, 100);
+      expect(controlador.historialUsuarioId, 7);
+    });
+
+    test('renombrarUsuario actualiza el activo y rechaza repetidos', () async {
+      await controlador.crearUsuario('Ana');
+      final id = controlador.usuario!.id!;
+
+      expect(
+        await controlador.renombrarUsuario(id, 'Ana María'),
+        ResultadoGuardado.ok,
+      );
+      expect(controlador.usuario?.alias, 'Ana María');
+      expect(
+        await controlador.renombrarUsuario(id, 'Paciente Principal'),
+        ResultadoGuardado.duplicado,
+      );
+    });
+
+    test(
+      'eliminarUsuario pasa al primero restante y protege al último',
+      () async {
+        await controlador.crearUsuario('Ana');
+        final idAna = controlador.usuario!.id!;
+
+        expect(await controlador.eliminarUsuario(idAna), isTrue);
+        expect(controlador.usuario?.id, 1);
+        expect(repositorio.usuarios, hasLength(1));
+
+        expect(await controlador.eliminarUsuario(1), isFalse);
+        expect(repositorio.usuarios, hasLength(1));
+      },
+    );
+
+    test('si falla el repositorio crearUsuario devuelve error', () async {
+      repositorio.fallar = true;
+
+      expect(await controlador.crearUsuario('Ana'), ResultadoGuardado.error);
+      expect(controlador.isLoading, isFalse);
+    });
+  });
+
+  group('Panel de inicio', () {
+    test('cargarPanel calcula las estadísticas del usuario activo', () async {
+      repositorio.actividadPorUsuario[1] = const [
+        ActividadDiaModel(
+          fecha: '2026-11-11',
+          sesiones: 1,
+          mediciones: 2,
+          repeticiones: 10,
+          promedioGrados: 80,
+        ),
+        ActividadDiaModel(
+          fecha: '2026-11-12',
+          sesiones: 1,
+          mediciones: 1,
+          repeticiones: 5,
+          promedioGrados: 100,
+        ),
+      ];
+
+      final correcto = await controlador.cargarPanel();
+
+      expect(correcto, isTrue);
+      expect(controlador.usuario?.id, 1);
+      final estadisticas = controlador.estadisticas!;
+      expect(estadisticas.totalSesiones, 2);
+      expect(estadisticas.totalRepeticiones, 15);
+      expect(estadisticas.rachaActual, 2);
+      expect(controlador.actividad, hasLength(2));
+    });
+
+    test('cargarEstadisticas carga evolución, historial y actividad', () async {
+      await controlador.cargarEstadisticas();
+
+      expect(controlador.estadisticas, isNotNull);
+      expect(controlador.estadisticas!.sinActividad, isTrue);
+      expect(controlador.hayError, isFalse);
+    });
+
+    test('un fallo en cargarPanel deja el error y apaga la carga', () async {
+      repositorio.fallar = true;
+
+      expect(await controlador.cargarPanel(), isFalse);
+      expect(controlador.hayError, isTrue);
+      expect(controlador.isLoading, isFalse);
+      expect(controlador.estadisticas, isNull);
+    });
+
+    test(
+      'un usuario guardado que ya no existe se sustituye por el primero',
+      () async {
+        repositorio.ajustes[MoviRehabController.claveUsuarioActivo] = '999';
+        repositorio.usuarios = const [UsuarioModel(id: 5, alias: 'Solo')];
+
+        await controlador.cargarUsuario();
+
+        expect(controlador.usuario?.id, 5);
+      },
+    );
   });
 }

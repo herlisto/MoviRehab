@@ -122,7 +122,7 @@ void main() {
 
   group('Historial de mediciones', () {
     testWidgets('carga los datos por sí mismo al abrirse', (tester) async {
-      repositorio.historial = [
+      repositorio.historialPorUsuario[1] = [
         const MedicionHistorialModel(
           id: 1,
           fecha: '2026-11-06',
@@ -164,17 +164,16 @@ void main() {
       expect(find.text('No se han podido cargar los datos.'), findsOneWidget);
       expect(find.byType(CircularProgressIndicator), findsNothing);
 
-      repositorio
-        ..fallar = false
-        ..historial = [
-          const MedicionHistorialModel(
-            id: 1,
-            fecha: '2026-11-06',
-            ejercicio: 'Flexión de codo',
-            grados: 120,
-            repeticiones: 10,
-          ),
-        ];
+      repositorio.fallar = false;
+      repositorio.historialPorUsuario[1] = [
+        const MedicionHistorialModel(
+          id: 1,
+          fecha: '2026-11-06',
+          ejercicio: 'Flexión de codo',
+          grados: 120,
+          repeticiones: 10,
+        ),
+      ];
       await tester.tap(find.text('Reintentar'));
       await tester.pumpAndSettle();
 
@@ -186,12 +185,16 @@ void main() {
     testWidgets('muestra media con el formato del idioma y repeticiones', (
       tester,
     ) async {
-      repositorio.evolucion = [
+      tester.view.physicalSize = const Size(800, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+      repositorio.evolucionPorUsuario[1] = [
         const EvolucionEjercicioModel(
           nombre: 'Elevación lateral de hombro',
           articulacion: 'Hombro',
           promedioGrados: 87.33333333,
           totalRepeticiones: 12,
+          objetivoGrados: 90,
         ),
       ];
 
@@ -203,10 +206,16 @@ void main() {
       expect(find.text('Elevación lateral de hombro'), findsOneWidget);
       expect(find.textContaining('Media: 87,3°'), findsOneWidget);
       expect(find.textContaining('Repeticiones totales: 12'), findsOneWidget);
+      expect(find.textContaining('Objetivo: 90°'), findsOneWidget);
+      expect(find.text('Evolución de la movilidad'), findsOneWidget);
+      expect(find.text('Por ejercicio'), findsOneWidget);
     });
 
     testWidgets('en inglés usa el punto decimal', (tester) async {
-      repositorio.evolucion = [
+      tester.view.physicalSize = const Size(800, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+      repositorio.evolucionPorUsuario[1] = [
         const EvolucionEjercicioModel(
           nombre: 'Elevación lateral de hombro',
           articulacion: 'Hombro',
@@ -244,7 +253,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Paciente Principal'), findsOneWidget);
+      // Aparece en la tarjeta grande del usuario activo y en la lista.
+      expect(find.text('Paciente Principal'), findsNWidgets(2));
       expect(find.text('ID SQLite: 1'), findsOneWidget);
     });
   });
@@ -313,7 +323,7 @@ void main() {
         await tester.pumpWidget(envolverApp(controlador));
         await tester.pumpAndSettle();
 
-        await tester.tap(find.text('Sesión Guiada NUI'));
+        await tester.tap(find.text('Nueva sesión'));
         await tester.pumpAndSettle();
 
         // El objetivo del medidor es el del primer ejercicio del plan (90°).
@@ -351,7 +361,7 @@ void main() {
 
       await tester.pumpWidget(envolverApp(controlador));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Sesión Guiada NUI'));
+      await tester.tap(find.text('Nueva sesión'));
       await tester.pumpAndSettle();
 
       await tester.tap(find.byType(DropdownButton<int>));
@@ -380,7 +390,7 @@ void main() {
 
       await tester.pumpWidget(envolverApp(controlador));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Sesión Guiada NUI'));
+      await tester.tap(find.text('Nueva sesión'));
       await tester.pumpAndSettle();
 
       await tester.tap(find.text('Finalizar sesión'));

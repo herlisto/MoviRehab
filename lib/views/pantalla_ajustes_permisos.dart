@@ -2,12 +2,19 @@ import 'package:flutter/foundation.dart'
     show TargetPlatform, debugPrint, defaultTargetPlatform, kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
+import '../controllers/ajustes_controller.dart';
 import '../l10n/app_localizations.dart';
+import '../routes.dart';
+import '../services/fuente_movimiento.dart';
+import '../widgets/pantalla_base.dart';
+import '../widgets/tarjeta_estadistica.dart';
 
-/// Estado real de los permisos de cámara y micrófono (Android / iOS).
-/// En Windows y otras plataformas el sistema no los gestiona por app y se
-/// indica "No aplica".
+/// Ajustes de la aplicación: modo oscuro, idioma (español / inglés, se aplica
+/// al instante), sensor de movimiento y estado real de los permisos de cámara
+/// y micrófono (Android / iOS). En Windows y otras plataformas el sistema no
+/// gestiona los permisos por app y se indica "No aplica".
 class AjustesPermisosScreen extends StatefulWidget {
   const AjustesPermisosScreen({super.key});
 
@@ -130,19 +137,123 @@ class _AjustesPermisosScreenState extends State<AjustesPermisosScreen>
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final ajustes = context.watch<AjustesController>();
+    final sensorDisponible = context.read<FuenteMovimiento>().disponible;
+    final esquema = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.settingsTitle)),
-      body: ListView(
-        children: [
-          _permisoTile(l10n, l10n.permissionCamera, _camara, Permission.camera),
-          _permisoTile(
-            l10n,
-            l10n.permissionMicrophone,
-            _microfono,
-            Permission.microphone,
-          ),
-        ],
+    final oscuro =
+        ajustes.modoTema == ThemeMode.dark ||
+        (ajustes.modoTema == ThemeMode.system &&
+            MediaQuery.platformBrightnessOf(context) == Brightness.dark);
+    final codigoIdioma =
+        ajustes.idioma?.languageCode ??
+        Localizations.localeOf(context).languageCode;
+
+    return PantallaBase(
+      titulo: l10n.settingsTitle,
+      cuerpo: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TituloSeccion(texto: l10n.settingsAppearance),
+            Card(
+              child: SwitchListTile(
+                secondary: Icon(oscuro ? Icons.dark_mode : Icons.light_mode),
+                title: Text(l10n.settingsDarkMode),
+                subtitle: Text(l10n.settingsDarkModeHelp),
+                value: oscuro,
+                onChanged: (valor) => ajustes.cambiarModoTema(
+                  valor ? ThemeMode.dark : ThemeMode.light,
+                ),
+              ),
+            ),
+            TituloSeccion(texto: l10n.settingsLanguage),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.settingsLanguageHelp,
+                      style: TextStyle(color: esquema.onSurfaceVariant),
+                    ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: double.infinity,
+                      child: SegmentedButton<String>(
+                        showSelectedIcon: false,
+                        segments: const [
+                          ButtonSegment<String>(
+                            value: 'es',
+                            icon: Icon(Icons.translate),
+                            label: Text('Español'),
+                          ),
+                          ButtonSegment<String>(
+                            value: 'en',
+                            icon: Icon(Icons.translate),
+                            label: Text('English'),
+                          ),
+                        ],
+                        selected: {codigoIdioma == 'en' ? 'en' : 'es'},
+                        onSelectionChanged: (seleccion) =>
+                            ajustes.cambiarIdioma(Locale(seleccion.first)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            TituloSeccion(texto: l10n.settingsSensors),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.sensors),
+                title: Text(l10n.settingsMotionSensor),
+                subtitle: Text(
+                  sensorDisponible
+                      ? l10n.settingsMotionSensorAvailable
+                      : l10n.settingsMotionSensorUnavailable,
+                ),
+                trailing: Icon(
+                  sensorDisponible
+                      ? Icons.check_circle
+                      : Icons.remove_circle_outline,
+                  color: sensorDisponible ? esquema.primary : null,
+                ),
+              ),
+            ),
+            TituloSeccion(texto: l10n.settingsPermissions),
+            Card(
+              child: Column(
+                children: [
+                  _permisoTile(
+                    l10n,
+                    l10n.permissionCamera,
+                    _camara,
+                    Permission.camera,
+                  ),
+                  const Divider(height: 1),
+                  _permisoTile(
+                    l10n,
+                    l10n.permissionMicrophone,
+                    _microfono,
+                    Permission.microphone,
+                  ),
+                ],
+              ),
+            ),
+            TituloSeccion(texto: l10n.settingsPrivacySection),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.shield_outlined),
+                title: Text(l10n.privacyTitle),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => Navigator.pushNamed(context, Rutas.privacidad),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

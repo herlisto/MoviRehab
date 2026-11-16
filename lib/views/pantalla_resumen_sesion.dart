@@ -8,8 +8,10 @@ import '../l10n/app_localizations.dart';
 import '../models/resumen_sesion_model.dart';
 import '../utils/formato.dart';
 import '../widgets/mensaje_estado.dart';
+import '../widgets/pantalla_base.dart';
 
-/// Resumen de una sesión guardada en SQLite. Sin [sesionId] muestra la última.
+/// Resumen de una sesión guardada en SQLite. Sin [sesionId] muestra la última
+/// del usuario activo.
 class ResumenSesionScreen extends StatefulWidget {
   final int? sesionId;
 
@@ -60,6 +62,7 @@ class _ResumenSesionScreenState extends State<ResumenSesionScreen> {
     final l10n = AppLocalizations.of(context);
     final controller = context.watch<MoviRehabController>();
     final resumen = controller.resumen;
+    final esquema = Theme.of(context).colorScheme;
 
     Widget cuerpo;
     if (_cargando) {
@@ -67,17 +70,28 @@ class _ResumenSesionScreenState extends State<ResumenSesionScreen> {
     } else if (resumen != null) {
       cuerpo = Center(
         child: SingleChildScrollView(
-          child: SessionSummaryCard(
-            title: l10n.summaryCardTitle,
-            sessionDate: resumen.fecha,
-            totalExercises: resumen.totalEjercicios,
-            avgDegrees: resumen.promedioGrados,
-            exercisesLabel: l10n.summaryExercises,
-            averageLabel: l10n.summaryAverage,
-            shareTooltip: l10n.summaryShare,
-            degreesFormatter: (grados) =>
-                '${formatearDecimal(context, grados)}°',
-            onShare: () => _copiarResumen(resumen),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.emoji_events_outlined,
+                size: 56,
+                color: esquema.tertiary,
+              ),
+              const SizedBox(height: 8),
+              SessionSummaryCard(
+                title: l10n.summaryCardTitle,
+                sessionDate: resumen.fecha,
+                totalExercises: resumen.totalEjercicios,
+                avgDegrees: resumen.promedioGrados,
+                exercisesLabel: l10n.summaryExercises,
+                averageLabel: l10n.summaryAverage,
+                shareTooltip: l10n.summaryShare,
+                degreesFormatter: (grados) =>
+                    '${formatearDecimal(context, grados)}°',
+                onShare: () => _copiarResumen(resumen),
+              ),
+            ],
           ),
         ),
       );
@@ -95,9 +109,6 @@ class _ResumenSesionScreenState extends State<ResumenSesionScreen> {
       );
     }
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.summaryTitle)),
-      body: cuerpo,
-    );
+    return PantallaBase(titulo: l10n.summaryTitle, cuerpo: cuerpo);
   }
 }

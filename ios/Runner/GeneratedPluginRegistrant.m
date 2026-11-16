@@ -12,6 +12,12 @@
 @import permission_handler_apple;
 #endif
 
+#if __has_include(<sensors_plus/FPPSensorsPlusPlugin.h>)
+#import <sensors_plus/FPPSensorsPlusPlugin.h>
+#else
+@import sensors_plus;
+#endif
+
 #if __has_include(<sqflite_darwin/SqflitePlugin.h>)
 #import <sqflite_darwin/SqflitePlugin.h>
 #else
@@ -22,6 +28,7 @@
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
   [PermissionHandlerPlugin registerWithRegistrar:[registry registrarForPlugin:@"PermissionHandlerPlugin"]];
+  [FPPSensorsPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FPPSensorsPlusPlugin"]];
   [SqflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"SqflitePlugin"]];
 }
 

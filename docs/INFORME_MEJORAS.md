@@ -1,6 +1,44 @@
 # Informe de análisis y mejoras de MoviRehab
 
+> Este documento tiene dos partes: la **versión 2.0** (nuevas mejoras pedidas sobre la app base) y, más abajo, el análisis de errores de la versión 1.
+
 Este documento resume los problemas que se encontraron en la versión original del proyecto y qué se hizo con cada uno. Se mantuvo la funcionalidad original; los cambios de comportamiento son los que se acordaron expresamente (ver «Decisiones acordadas»).
+
+---
+
+# Versión 2.0 — mejoras sobre la app base
+
+Se partió de la app entregada sin cambiar sus funcionalidades base (plan, detalle, sesión guiada, resumen, progreso, historial, ajustes, perfil, privacidad, ES/EN).
+
+| # | Mejora pedida | Qué se hizo |
+| --- | --- | --- |
+| 1 | Interfaz más visual, colores de naturaleza | Tema propio con verdes de bosque/musgo, tierra cálida y fondos crema (claro) o verde muy oscuro (oscuro); tarjetas redondeadas, fondo con degradado y contenido centrado (ancho máx. 760 px, cómodo en Windows y móvil). Contrastes de texto calculados (≥ 4,5:1). |
+| 2 | Modo oscuro en Ajustes | Interruptor en Ajustes; se aplica al instante y se guarda (tabla `ajuste`). Hasta que se elige, se sigue el tema del sistema. |
+| 3 | Contar repeticiones con el sensor | Acelerómetro (`sensors_plus`): calibración de 0°, filtrado, rechazo de muestras anómalas, histéresis y pausa mínima. Vibración al completar una repetición. Modo manual como alternativa y para Windows. |
+| 4 | Estadísticas mejoradas | Tarjetas de totales, racha actual y mejor racha, gráfico semanal, línea de evolución y barras por ejercicio frente al objetivo. Gráficos propios (sin paquetes). |
+| 5 | Varios usuarios | Crear, seleccionar, renombrar y eliminar usuarios; cada usuario tiene sus sesiones, estadísticas e historial; *Ver ejercicios* en el perfil. El usuario activo se recuerda. |
+| 6 | Crear más ejercicios | Pantalla *Nuevo ejercicio* (nombre, articulación, recorrido en grados). Se pueden borrar los propios; los 10 originales no. |
+| 7 | Menú desplegable e inicio con estadísticas y calendario | Menú lateral (☰). Inicio: título, saludo, estadísticas, gráfico semanal y calendario con detalle por día. |
+| 8 | Privacidad | Texto nuevo en 7 apartados desplegables; describe sensores, almacenamiento local, copias de seguridad de Android y salud. |
+| 9 | Idioma en Ajustes | Selector Español / English con efecto inmediato (sin reiniciar). |
+
+**Base de datos v3:** columna `ejercicio.personalizado` y tabla `ajuste`. La migración v2→v3 conserva los datos (comprobada en SQLite real).
+
+**Ampliación de tests:** medidor de movimiento, calculador de ángulo, contador de repeticiones, ajustes, usuarios, ejercicios propios, sesión con sensor simulado, calendario/gráficos, privacidad, paridad de los `.arb` y temas.
+
+**Privacidad y datos personales:** nada sale del dispositivo; la app no usa Internet.
+
+## Cómo se comprobó la versión 2.0 (y qué no)
+
+Igual que en la versión 1, **no hay SDK de Flutter en el entorno de trabajo, así que no se compiló ni se ejecutó la app ni los tests**. Se hizo: sintaxis y formato con el Dart SDK; el SQL (esquema, consultas por usuario, cascadas, migración v2→v3) contra SQLite real; paridad y placeholders de los `.arb`; comprobación cruzada de textos, imports y paquetes; APIs de Flutter y `sensors_plus` contrastadas con su código fuente; contrastes de color calculados.
+
+**Qué no se pudo probar:** el comportamiento real del acelerómetro en un móvil (los umbrales de repetición pueden necesitar ajuste fino), el aspecto exacto de las pantallas y la ejecución de los tests.
+
+**Primera vez:** `flutter pub get`, `flutter analyze`, `flutter test`. Si hay avisos o errores, envíalos y se corrigen.
+
+---
+
+# Versión 1 — análisis de errores
 
 ## Decisiones acordadas
 

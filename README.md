@@ -9,23 +9,29 @@ El proyecto se basa en la creación de una aplicación sencilla orientada al seg
 
 ---
 
-## Funcionalidades
+## Funcionalidades (versión 2.0)
 
 | Pantalla | Qué hace |
 | --- | --- |
-| Inicio | Menú principal, aviso de privacidad y ajustes. |
-| Perfil de Usuario | Muestra el usuario guardado en SQLite. |
-| Plan de Ejercicios | Lista los 10 ejercicios del plan con su objetivo en grados. |
-| Detalle de ejercicio | Cambia el objetivo (15°–180°) y lo guarda en SQLite. |
-| Sesión Guiada NUI | Eliges un ejercicio, simulas el ángulo (+15° y +1 repetición por pulsación), **guardas la medición** y repites con otros ejercicios. *Finalizar sesión* abre el resumen. |
-| Resumen de Sesión | Fecha, nº de ejercicios y media de grados de la sesión (o de la última sesión si se abre desde Inicio). El botón compartir copia el resumen al portapapeles. |
-| Progreso y Medias | Media de grados y repeticiones totales por ejercicio. |
-| Historial de Mediciones | Todas las mediciones, de la más reciente a la más antigua. |
-| Ajustes y Permisos | Estado real de los permisos de cámara y micrófono (Android). En Windows indica «No aplica». |
+| Inicio | Título de la app, saludo al usuario activo, **estadísticas** (sesiones, repeticiones, movilidad media, racha), gráfico de la última semana y **calendario de actividad** con el detalle de cada día. Todas las opciones están en un **menú desplegable** (icono ☰). |
+| Perfil y usuarios | **Varios usuarios**: crear, cambiar de usuario, renombrar y eliminar (siempre queda uno). *Ver ejercicios* abre el historial de ese usuario. |
+| Plan de Ejercicios | Los 10 ejercicios preestablecidos **más los tuyos**. *Nuevo ejercicio*: nombre, articulación y recorrido en grados (10°–180°). |
+| Detalle de ejercicio | Cambia el objetivo en grados (10°–180°) y lo guarda. Los ejercicios propios se pueden eliminar. |
+| Sesión Guiada NUI | **Modo automático (móvil):** el acelerómetro mide el ángulo y cuenta las repeticiones sin pulsar nada. **Modo manual:** botón *Simular ángulo* (+15° y +1 repetición); es el único modo en Windows. Guardas mediciones de varios ejercicios y *Finalizar sesión* abre el resumen. |
+| Resumen de Sesión | Fecha, nº de ejercicios y media de grados. Compartir copia el resumen al portapapeles. |
+| Progreso y Estadísticas | Totales, racha, gráfico semanal, evolución de la media de grados y barras de progreso por ejercicio frente a su objetivo. |
+| Historial de Mediciones | Mediciones del usuario activo (o del que elijas en Perfil), de la más reciente a la más antigua. |
+| Ajustes y Permisos | **Modo oscuro**, **idioma (Español / English) con cambio inmediato**, estado del sensor de movimiento, permisos de cámara y micrófono (Android) y acceso a la privacidad. |
+| Privacidad | Aviso mejorado en apartados desplegables: tratamiento local, datos guardados, usos, sensores y permisos, compartir, control de los datos y aviso de salud. |
 
-> **Nota:** el ángulo de la Sesión Guiada es una **simulación**. Todavía no hay detección de pose con cámara ni control por voz; por eso se eliminaron del proyecto las dependencias que nunca se llegaron a usar (`speech_to_text`, `flutter_tts`, `google_mlkit_pose_detection`, `sensors_plus`, `go_router`).
+Idiomas: **español e inglés**. Se usa el idioma del dispositivo hasta que eliges uno en Ajustes (queda guardado). Los nombres de los 10 ejercicios preestablecidos y de las articulaciones se traducen; los ejercicios que crees conservan el nombre que les pongas.
 
-Idiomas: español (por defecto) e inglés, según el idioma del dispositivo. Los nombres de los ejercicios y articulaciones son datos de la base de datos y se muestran siempre en español.
+### Medición con el sensor del móvil
+
+- Usa el **acelerómetro** (no necesita permisos). Al pulsar *Iniciar medición* la posición del móvil es **0°**; el ángulo es la inclinación respecto a esa posición (0–180°).
+- Cuenta una repetición cuando el ángulo sube hasta cerca del objetivo y vuelve cerca del inicio (con histéresis y pausa mínima de 0,5 s para evitar dobles conteos). *Poner a 0°* recalibra.
+- **Limitación:** el acelerómetro mide la inclinación respecto a la gravedad. Un giro alrededor del eje vertical (por ejemplo una rotación con el brazo pegado al cuerpo y el móvil plano) no cambia la inclinación y no se detecta. Para eso haría falta el giroscopio; en esos casos usa el modo manual.
+- En **Windows** (sin sensor) la app indica que se usa el modo manual.
 
 ## Requisitos
 
@@ -50,7 +56,7 @@ La primera compilación de Android descarga Gradle (9.3.1) y puede tardar varios
 | Plataforma | Estado |
 | --- | --- |
 | Windows | ✅ Soportada (SQLite con `sqflite_common_ffi`). |
-| Android | ❌ Soportada (`sqflite` nativo). |
+| Android | ✅ Soportada (`sqflite` nativo). |
 | Web | ❌ No soportada (SQLite local y permisos no existen en navegador): la app muestra un aviso. |
 | iOS / macOS / Linux | No incluidas en el proyecto. Se añadirían con `flutter create --platforms=ios .` (etc.). |
 
@@ -66,16 +72,21 @@ cd packages/movirehab_components && flutter test   # tests de los componentes
 
 ```
 lib/
-  main.dart                 Arranque, tema, idiomas y rutas
+  main.dart                 Arranque, tema, idioma y rutas
   routes.dart               Nombres de ruta
-  controllers/              MoviRehabController (Provider + ChangeNotifier)
-  models/                   Modelos de datos y de consultas
+  theme/app_theme.dart      Tema «naturaleza» claro y oscuro
+  controllers/              MoviRehabController, AjustesController (tema/idioma),
+                            MedidorMovimiento (sensor + repeticiones)
+  models/                   Modelos de datos, actividad diaria y estadísticas
   services/
     rehab_repository.dart   Contrato de acceso a datos
-    database_helper.dart    Implementación SQLite
+    database_helper.dart    Implementación SQLite (esquema v3)
+    fuente_movimiento.dart  Acelerómetro (sensors_plus) o «no disponible»
+    calculador_angulo.dart  Muestras del acelerómetro -> grados
+    contador_repeticiones.dart  Grados -> repeticiones
   views/                    Pantallas
-  widgets/                  Widgets compartidos (estados vacío/error)
-  utils/formato.dart        Formato de decimales según el idioma
+  widgets/                  Fondo, menú lateral, calendario, gráficos y tarjetas
+  utils/                    Formato de decimales y nombres localizados
   l10n/                     app_es.arb, app_en.arb (+ código generado)
 packages/movirehab_components/   AngleGauge y SessionSummaryCard
 test/                       Tests de la app (con repositorio en memoria)
@@ -83,7 +94,7 @@ test/                       Tests de la app (con repositorio en memoria)
 
 ## Base de datos
 
-SQLite local (`movirehab.db`, en la carpeta *Documentos* del usuario en Windows y en el almacenamiento privado de la app en Android). Tablas: `usuario`, `ejercicio`, `sesion`, `medicion` (versión 2 del esquema). Se crea y se rellena sola con datos de demostración en el primer arranque.
+SQLite local (`movirehab.db`, en la carpeta *Documentos* del usuario en Windows y en el almacenamiento privado de la app en Android). Tablas: `usuario`, `ejercicio` (con la marca `personalizado`), `sesion`, `medicion` y `ajuste` (tema, idioma y usuario activo). Esquema **versión 3**: una base de datos v2 se actualiza **conservando todos los datos**. Se crea y se rellena sola con datos de demostración en el primer arranque.
 
 Si quieres empezar de cero, borra `movirehab.db` (Windows) o los datos de la app (Android).
 

@@ -6,12 +6,14 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
+import '../models/actividad_dia_model.dart';
 import '../models/ejercicio_model.dart';
 import '../models/evolucion_ejercicio_model.dart';
 import '../models/medicion_historial_model.dart';
 import '../models/medicion_model.dart';
 import '../models/resumen_sesion_model.dart';
 import '../models/usuario_model.dart';
+import '../models/usuario_resumen_model.dart';
 import 'rehab_repository.dart';
 
 /// Acceso a la base de datos SQLite local de MoviRehab.
@@ -26,8 +28,10 @@ class DatabaseHelper implements RehabRepository {
 
   static const String _nombreBD = 'movirehab.db';
 
-  /// Versión del esquema. La v2 es el esquema actual de cuatro tablas.
-  static const int _versionBD = 2;
+  /// Versión del esquema.
+  /// * v2: cuatro tablas (usuario, ejercicio, sesion, medicion).
+  /// * v3: columna `ejercicio.personalizado` y tabla `ajuste` (clave/valor).
+  static const int _versionBD = 3;
 
   static const String _aliasPorDefecto = 'Paciente_Principal';
 
@@ -81,6 +85,12 @@ class DatabaseHelper implements RehabRepository {
           await _eliminarTablas(db);
           await _crearTablas(db);
           await _sembrarDatosDemo(db);
+          return;
+        }
+        // v2 -> v3: se conservan todos los datos existentes.
+        if (oldVersion < 3) {
+          await db.execute(_sqlAnadirPersonalizado);
+          await db.execute(_sqlCrearAjuste);
         }
       },
     );
@@ -102,7 +112,21 @@ class DatabaseHelper implements RehabRepository {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       nombre TEXT NOT NULL,
       articulacion TEXT NOT NULL,
-      objetivo_grados INTEGER NOT NULL
+      objetivo_grados INTEGER NOT NULL,
+      personalizado INTEGER NOT NULL DEFAULT 0
+    )
+  ''';
+
+  /// Migración v2 -> v3: marca los ejercicios creados por el usuario.
+  static const String _sqlAnadirPersonalizado = '''
+    ALTER TABLE ejercicio
+    ADD COLUMN personalizado INTEGER NOT NULL DEFAULT 0
+  ''';
+
+  static const String _sqlCrearAjuste = '''
+    CREATE TABLE ajuste (
+      clave TEXT PRIMARY KEY,
+      valor TEXT NOT NULL
     )
   ''';
 
@@ -132,10 +156,12 @@ class DatabaseHelper implements RehabRepository {
     await db.execute(_sqlCrearEjercicio);
     await db.execute(_sqlCrearSesion);
     await db.execute(_sqlCrearMedicion);
+    await db.execute(_sqlCrearAjuste);
   }
 
   /// Borra en orden hijo -> padre para respetar las claves foráneas.
   Future<void> _eliminarTablas(Database db) async {
+    await db.execute('DROP TABLE IF EXISTS ajuste');
     await db.execute('DROP TABLE IF EXISTS medicion');
     await db.execute('DROP TABLE IF EXISTS sesion');
     await db.execute('DROP TABLE IF EXISTS ejercicio');
@@ -231,11 +257,14 @@ class DatabaseHelper implements RehabRepository {
   static const String _sqlEvolucion = '''
     SELECT e.nombre AS nombre,
            e.articulacion AS articulacion,
+           e.objetivo_grados AS objetivo_grados,
            AVG(m.grados) AS promedio_grados,
            SUM(m.repeticiones) AS total_reps
     FROM medicion m
+    JOIN sesion s ON m.sesion_id = s.id
     JOIN ejercicio e ON m.ejercicio_id = e.id
-    GROUP BY e.id, e.nombre, e.articulacion
+    WHERE s.usuario_id = ?
+    GROUP BY e.id, e.nombre, e.articulacion, e.objetivo_grados
     ORDER BY e.id
   ''';
 
@@ -248,7 +277,34 @@ class DatabaseHelper implements RehabRepository {
     FROM medicion m
     JOIN sesion s ON m.sesion_id = s.id
     JOIN ejercicio e ON m.ejercicio_id = e.id
+    WHERE s.usuario_id = ?
     ORDER BY s.fecha DESC, m.id DESC
+  ''';
+
+  static const String _sqlActividadDiaria = '''
+    SELECT s.fecha AS fecha,
+           COUNT(DISTINCT s.id) AS sesiones,
+           COUNT(m.id) AS mediciones,
+           COALESCE(SUM(m.repeticiones), 0) AS repeticiones,
+           COALESCE(AVG(m.grados), 0) AS promedio_grados
+    FROM sesion s
+    JOIN medicion m ON m.sesion_id = s.id
+    WHERE s.usuario_id = ?
+    GROUP BY s.fecha
+    ORDER BY s.fecha ASC
+  ''';
+
+  static const String _sqlUsuariosConResumen = '''
+    SELECT u.id AS id,
+           u.alias AS alias,
+           (SELECT COUNT(*) FROM sesion s WHERE s.usuario_id = u.id)
+             AS sesiones,
+           (SELECT COUNT(*)
+              FROM medicion m
+              JOIN sesion s ON m.sesion_id = s.id
+             WHERE s.usuario_id = u.id) AS mediciones
+    FROM usuario u
+    ORDER BY u.id ASC
   ''';
 
   static const String _sqlResumenSesion = '''
@@ -269,6 +325,7 @@ class DatabaseHelper implements RehabRepository {
            AVG(m.grados) AS promedio_grados
     FROM sesion s
     JOIN medicion m ON m.sesion_id = s.id
+    WHERE s.usuario_id = ?
     GROUP BY s.id, s.fecha
     ORDER BY s.fecha DESC, s.id DESC
     LIMIT 1
@@ -285,10 +342,78 @@ class DatabaseHelper implements RehabRepository {
   }
 
   @override
+  Future<List<UsuarioModel>> obtenerUsuarios() async {
+    final db = await database;
+    final filas = await db.query('usuario', orderBy: 'id ASC');
+    return filas.map(UsuarioModel.fromMap).toList();
+  }
+
+  @override
+  Future<List<UsuarioResumenModel>> obtenerUsuariosConResumen() async {
+    final db = await database;
+    final filas = await db.rawQuery(_sqlUsuariosConResumen);
+    return filas.map(UsuarioResumenModel.fromMap).toList();
+  }
+
+  @override
+  Future<UsuarioModel> crearUsuario(String alias) async {
+    final db = await database;
+    final id = await db.insert('usuario', {'alias': alias});
+    return UsuarioModel(id: id, alias: alias);
+  }
+
+  @override
+  Future<int> renombrarUsuario(int id, String alias) async {
+    final db = await database;
+    return db.update(
+      'usuario',
+      {'alias': alias},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  @override
+  Future<int> eliminarUsuario(int id) async {
+    final db = await database;
+    return db.delete('usuario', where: 'id = ?', whereArgs: [id]);
+  }
+
+  @override
+  Future<String?> leerAjuste(String clave) async {
+    final db = await database;
+    final filas = await db.query(
+      'ajuste',
+      columns: ['valor'],
+      where: 'clave = ?',
+      whereArgs: [clave],
+      limit: 1,
+    );
+    if (filas.isEmpty) return null;
+    return filas.first['valor'] as String?;
+  }
+
+  @override
+  Future<void> guardarAjuste(String clave, String valor) async {
+    final db = await database;
+    await db.insert('ajuste', {
+      'clave': clave,
+      'valor': valor,
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  @override
   Future<List<EjercicioModel>> obtenerEjercicios() async {
     final db = await database;
     final filas = await db.query('ejercicio', orderBy: 'id ASC');
     return filas.map(EjercicioModel.fromMap).toList();
+  }
+
+  @override
+  Future<int> crearEjercicio(EjercicioModel ejercicio) async {
+    final db = await database;
+    final datos = ejercicio.toMap()..remove('id');
+    return db.insert('ejercicio', datos);
   }
 
   @override
@@ -321,17 +446,28 @@ class DatabaseHelper implements RehabRepository {
   }
 
   @override
-  Future<List<EvolucionEjercicioModel>> obtenerEvolucionPromedio() async {
+  Future<List<EvolucionEjercicioModel>> obtenerEvolucionPromedio(
+    int usuarioId,
+  ) async {
     final db = await database;
-    final filas = await db.rawQuery(_sqlEvolucion);
+    final filas = await db.rawQuery(_sqlEvolucion, [usuarioId]);
     return filas.map(EvolucionEjercicioModel.fromMap).toList();
   }
 
   @override
-  Future<List<MedicionHistorialModel>> obtenerHistorialMediciones() async {
+  Future<List<MedicionHistorialModel>> obtenerHistorialMediciones(
+    int usuarioId,
+  ) async {
     final db = await database;
-    final filas = await db.rawQuery(_sqlHistorial);
+    final filas = await db.rawQuery(_sqlHistorial, [usuarioId]);
     return filas.map(MedicionHistorialModel.fromMap).toList();
+  }
+
+  @override
+  Future<List<ActividadDiaModel>> obtenerActividadDiaria(int usuarioId) async {
+    final db = await database;
+    final filas = await db.rawQuery(_sqlActividadDiaria, [usuarioId]);
+    return filas.map(ActividadDiaModel.fromMap).toList();
   }
 
   @override
@@ -343,9 +479,9 @@ class DatabaseHelper implements RehabRepository {
   }
 
   @override
-  Future<ResumenSesionModel?> obtenerUltimoResumen() async {
+  Future<ResumenSesionModel?> obtenerUltimoResumen(int usuarioId) async {
     final db = await database;
-    final filas = await db.rawQuery(_sqlUltimoResumen);
+    final filas = await db.rawQuery(_sqlUltimoResumen, [usuarioId]);
     if (filas.isEmpty) return null;
     return ResumenSesionModel.fromMap(filas.first);
   }

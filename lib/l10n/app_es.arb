@@ -1,24 +1,72 @@
 {
   "@@locale": "es",
-
   "appTitle": "MoviRehab",
-  "welcomeMessage": "Bienvenido a MoviRehab",
   "rangeProgress": "Progreso Articular",
   "goalReached": "¡Rango de movilidad completado!",
   "holdPosture": "Mantén la postura para completar el ángulo.",
-
-  "homeTitle": "MoviRehab - Inicio",
+  "save": "Guardar",
+  "cancel": "Cancelar",
+  "delete": "Eliminar",
   "homeHeadline": "Rehabilitación de Movilidad Articular",
-  "menuProfile": "Perfil de Usuario",
+  "homeGreeting": "Hola, {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeStartSession": "Nueva sesión",
+  "homeNoActivity": "Todavía no hay actividad. ¡Empieza tu primera sesión!",
+  "homeWeekTitle": "Repeticiones de la última semana",
+  "homeCalendarTitle": "Calendario de actividad",
+  "homeDayEmpty": "{date}: sin actividad",
+  "@homeDayEmpty": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDayDetail": "{date}: {sessions, plural, =1{1 sesión} other{{sessions} sesiones}} · {measurements} mediciones · {reps} repeticiones · media {average}°",
+  "@homeDayDetail": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "sessions": {
+        "type": "int"
+      },
+      "measurements": {
+        "type": "int"
+      },
+      "reps": {
+        "type": "int"
+      },
+      "average": {
+        "type": "String"
+      }
+    }
+  },
+  "homeSeeHistory": "Ver historial",
+  "menuProfile": "Perfil y usuarios",
   "menuPlan": "Plan de Ejercicios",
   "menuGuidedSession": "Sesión Guiada NUI",
-  "menuProgress": "Progreso y Medias",
+  "menuProgress": "Progreso y Estadísticas",
   "menuHistory": "Historial de Mediciones",
   "menuSummary": "Resumen de Sesión",
-  "tooltipPrivacy": "Aviso de privacidad",
-  "tooltipSettings": "Ajustes y permisos",
-
-  "profileTitle": "Perfil de Usuario",
+  "menuSettings": "Ajustes",
+  "menuPrivacy": "Privacidad",
+  "statsSessions": "Sesiones",
+  "statsRepetitions": "Repeticiones",
+  "statsAverage": "Movilidad media",
+  "statsActiveDays": "Días activos",
+  "statsStreak": "Racha (días)",
+  "statsBestStreak": "Mejor racha",
+  "statsEvolutionTitle": "Evolución de la movilidad",
+  "statsEvolutionHelp": "Media de grados por día de entrenamiento.",
+  "statsByExerciseTitle": "Por ejercicio",
+  "profileTitle": "Perfil y usuarios",
   "profileId": "ID SQLite: {id}",
   "@profileId": {
     "placeholders": {
@@ -27,7 +75,46 @@
       }
     }
   },
-
+  "usersTitle": "Usuarios",
+  "userActive": "Usuario activo",
+  "userNew": "Nuevo usuario",
+  "userNewTitle": "Crear usuario",
+  "userCreate": "Crear",
+  "userCreated": "Usuario creado y seleccionado",
+  "userRenameTitle": "Cambiar nombre",
+  "userRename": "Cambiar nombre",
+  "userNameLabel": "Nombre del usuario",
+  "userSelect": "Usar este usuario",
+  "userSeeExercises": "Ver ejercicios",
+  "userMore": "Más opciones",
+  "userDuplicate": "Ya existe un usuario con ese nombre.",
+  "userInvalid": "Escribe un nombre de entre 1 y 30 caracteres.",
+  "userDeleteTitle": "¿Eliminar usuario?",
+  "userDeleteBody": "Se borrarán {name} y todas sus sesiones y mediciones. Esta acción no se puede deshacer.",
+  "@userDeleteBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "userDeleted": "Usuario eliminado",
+  "userSessions": "{count, plural, =1{1 sesión} other{{count} sesiones}}",
+  "@userSessions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "userMeasurements": "{count, plural, =1{1 medición} other{{count} mediciones}}",
+  "@userMeasurements": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "planTitle": "Plan de Ejercicios",
   "planJoint": "Articulación: {joint}",
   "@planJoint": {
@@ -38,7 +125,29 @@
     }
   },
   "planEmpty": "No hay ejercicios en el plan.",
-
+  "planCustomBadge": "Ejercicio propio",
+  "exerciseNew": "Nuevo ejercicio",
+  "exerciseNewTitle": "Nuevo ejercicio",
+  "exerciseNewIntro": "Añade un ejercicio al plan indicando su nombre, la articulación y el recorrido del movimiento.",
+  "exerciseNameLabel": "Nombre del ejercicio",
+  "exerciseNameRequired": "Escribe un nombre para el ejercicio.",
+  "exerciseDuplicate": "Ya existe un ejercicio con ese nombre.",
+  "exerciseJointLabel": "Articulación",
+  "exerciseRangeLabel": "Recorrido del ejercicio (grados)",
+  "exerciseRangeHelp": "Ángulo que recorre el movimiento desde la posición de partida (entre 10° y 180°).",
+  "exerciseCreate": "Crear ejercicio",
+  "exerciseCreated": "Ejercicio creado",
+  "exerciseDelete": "Eliminar ejercicio",
+  "exerciseDeleteTitle": "¿Eliminar ejercicio?",
+  "exerciseDeleteBody": "Se borrará «{name}» y todas las mediciones hechas con él. Esta acción no se puede deshacer.",
+  "@exerciseDeleteBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "exerciseDeleted": "Ejercicio eliminado",
   "detailTarget": "Grados objetivo: {degrees}°",
   "@detailTarget": {
     "placeholders": {
@@ -49,9 +158,32 @@
   },
   "detailSave": "Guardar",
   "detailSaved": "Objetivo actualizado",
-
+  "invalidExercise": "No se ha indicado ningún ejercicio.",
+  "jointShoulder": "Hombro",
+  "jointElbow": "Codo",
+  "jointWrist": "Muñeca",
+  "jointHip": "Cadera",
+  "jointKnee": "Rodilla",
+  "jointAnkle": "Tobillo",
+  "jointNeck": "Cervical",
+  "jointOther": "Otra",
+  "exShoulderLateralRaise": "Elevación lateral de hombro",
+  "exElbowFlexion": "Flexión de codo",
+  "exShoulderExternalRotation": "Rotación externa de hombro",
+  "exKneeExtension": "Extensión de rodilla",
+  "exAnkleDorsiflexion": "Flexión dorsal de tobillo",
+  "exWristCircumduction": "Circunducción de muñeca",
+  "exHipFlexion": "Flexión de cadera",
+  "exChestOpening": "Apertura pectoral",
+  "exForearmPronation": "Pronación de antebrazo",
+  "exNeckLateralTilt": "Inclinación lateral cervical",
   "guidedTitle": "Sesión Guiada (NUI)",
   "guidedExercise": "Ejercicio",
+  "guidedModeAuto": "Automático",
+  "guidedModeManual": "Manual",
+  "guidedStart": "Iniciar medición",
+  "guidedStop": "Detener",
+  "guidedRecalibrate": "Poner a 0°",
   "guidedSimulate": "Simular Ángulo",
   "guidedReset": "Reiniciar",
   "guidedSave": "Guardar medición",
@@ -60,6 +192,14 @@
   "@guidedRepetitions": {
     "placeholders": {
       "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedMaxAngle": "Ángulo máximo: {degrees}°",
+  "@guidedMaxAngle": {
+    "placeholders": {
+      "degrees": {
         "type": "int"
       }
     }
@@ -74,8 +214,11 @@
   },
   "guidedNothingToFinish": "Guarda al menos una medición para finalizar la sesión.",
   "guidedSimulationNote": "Simulación: cada pulsación suma 15° y 1 repetición.",
+  "guidedAutoHint": "Sujeta el móvil al brazo o a la pierna que vas a mover, en la posición de partida, y pulsa Iniciar. Las repeticiones se cuentan solas.",
+  "guidedAutoMeasuring": "Midiendo: la posición de partida es 0°. Mueve la extremidad hasta el objetivo y vuelve a la posición inicial para contar una repetición.",
+  "guidedNoSensor": "Este dispositivo no tiene sensor de movimiento: se usa el modo manual.",
+  "guidedSensorError": "No se pudo leer el sensor de movimiento: se usa el modo manual.",
   "guidedNoExercises": "No hay ejercicios en el plan.",
-
   "summaryTitle": "Resumen de Sesión",
   "summaryCardTitle": "Sesión completada",
   "summaryExercises": "Ejercicios",
@@ -97,7 +240,6 @@
       }
     }
   },
-
   "progressTitle": "Progreso y Estadísticas",
   "progressAverage": "Media: {degrees}°",
   "@progressAverage": {
@@ -115,9 +257,24 @@
       }
     }
   },
+  "progressTarget": "Objetivo: {degrees}°",
+  "@progressTarget": {
+    "placeholders": {
+      "degrees": {
+        "type": "int"
+      }
+    }
+  },
   "progressEmpty": "Aún no hay mediciones registradas.",
-
   "historyTitle": "Historial de Mediciones",
+  "historyOfUser": "Ejercicios de {user}",
+  "@historyOfUser": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      }
+    }
+  },
   "historyDate": "Fecha: {date}",
   "@historyDate": {
     "placeholders": {
@@ -135,11 +292,18 @@
     }
   },
   "historyEmpty": "Aún no hay mediciones registradas.",
-
-  "privacyTitle": "Aviso de Privacidad",
-  "privacyBody": "Tratamiento local de datos respetando la privacidad del usuario.",
-
   "settingsTitle": "Ajustes y Permisos",
+  "settingsAppearance": "Apariencia",
+  "settingsDarkMode": "Modo oscuro",
+  "settingsDarkModeHelp": "Cambia entre el tema claro y el oscuro.",
+  "settingsLanguage": "Idioma",
+  "settingsLanguageHelp": "El cambio se aplica al instante en toda la aplicación.",
+  "settingsSensors": "Sensores",
+  "settingsMotionSensor": "Sensor de movimiento",
+  "settingsMotionSensorAvailable": "Disponible: las repeticiones se cuentan automáticamente.",
+  "settingsMotionSensorUnavailable": "No disponible en este dispositivo: se usa el modo manual.",
+  "settingsPermissions": "Permisos",
+  "settingsPrivacySection": "Privacidad",
   "permissionCamera": "Permiso de Cámara",
   "permissionMicrophone": "Permiso de Micrófono",
   "permissionGranted": "Concedido",
@@ -149,9 +313,25 @@
   "permissionNotApplicable": "No aplica en esta plataforma",
   "permissionRequest": "Solicitar",
   "permissionOpenSettings": "Abrir ajustes",
-
+  "privacyTitle": "Aviso de Privacidad",
+  "privacyHeadline": "Tus datos se quedan en tu dispositivo",
+  "privacyBody": "MoviRehab funciona sin cuenta y sin conexión: no envía información a ningún servidor.",
+  "privacyLocalTitle": "Tratamiento local",
+  "privacyLocalBody": "Toda la información se guarda en una base de datos SQLite dentro del almacenamiento privado de la aplicación. MoviRehab no necesita registro, no usa servidores propios ni de terceros y no incluye publicidad, analítica ni rastreadores.",
+  "privacyDataTitle": "Qué datos se guardan",
+  "privacyDataBody": "• Los nombres de los usuarios que crees en la aplicación.\n• Tus ejercicios propios (nombre, articulación y recorrido en grados).\n• Las sesiones: fecha y, por cada medición, el ejercicio, el ángulo máximo alcanzado y las repeticiones.\n• Tus preferencias: tema, idioma y usuario activo.\n\nNo se pide ni se guarda correo, teléfono, ubicación, fotos, vídeo ni audio.",
+  "privacyUseTitle": "Para qué se usan",
+  "privacyUseBody": "Solo para mostrarte tu progreso: estadísticas, calendario de actividad, historial y resumen de cada sesión. Los datos de cada usuario se mantienen separados y no se combinan ni se usan para ningún otro fin.",
+  "privacySensorsTitle": "Sensores y permisos",
+  "privacySensorsBody": "El conteo automático de repeticiones usa el acelerómetro del móvil. Sus lecturas se procesan en el momento, solo mientras la medición está activa, y no se guardan: únicamente se almacena el ángulo máximo y el número de repeticiones cuando pulsas Guardar medición. El acelerómetro no requiere ningún permiso.\n\nLa aplicación declara los permisos de cámara y micrófono para futuras funciones, pero la versión actual no captura imágenes ni sonido. Puedes revisar su estado en Ajustes.",
+  "privacySharingTitle": "Compartir información",
+  "privacySharingBody": "MoviRehab no comparte datos por sí misma. El botón Compartir del resumen solo copia un texto al portapapeles cuando lo pulsas; tú decides dónde pegarlo.",
+  "privacyControlTitle": "Tu control sobre los datos",
+  "privacyControlBody": "• Puedes cambiar el nombre de un usuario o eliminarlo desde Perfil y usuarios: se borran también sus sesiones y mediciones.\n• Los ejercicios propios se pueden eliminar desde su detalle.\n• Borrar los datos de la aplicación en los ajustes del sistema, o desinstalarla, elimina toda la información.\n• Si tu dispositivo tiene copias de seguridad del sistema activadas, es el propio sistema quien decide si incluye los datos de la aplicación.",
+  "privacyHealthTitle": "Aviso sobre salud",
+  "privacyHealthBody": "MoviRehab es una herramienta de apoyo al ejercicio y no es un producto sanitario. Las mediciones del sensor del móvil son aproximadas (solo detectan cambios de inclinación). Sigue siempre las indicaciones de tu fisioterapeuta o médico y detén el ejercicio si sientes dolor.",
+  "privacyUpdated": "Versión 2.0 del aviso · noviembre de 2026",
   "errorLoading": "No se han podido cargar los datos.",
   "errorSaving": "No se han podido guardar los cambios.",
-  "retry": "Reintentar",
-  "invalidExercise": "No se ha indicado ningún ejercicio."
+  "retry": "Reintentar"
 }

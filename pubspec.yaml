@@ -1,7 +1,7 @@
 name: movirehab
 description: "MoviRehab - Aplicación de ejercicios de movilidad y rehabilitación articular (Proyecto 5)"
 publish_to: 'none'
-version: 1.0.0+1
+version: 2.0.0+2
 
 environment:
   sdk: ^3.13.0
@@ -22,6 +22,10 @@ dependencies:
 
   # Permisos de cámara y micrófono (pantalla Ajustes y Permisos)
   permission_handler: ^13.0.2
+
+  # Acelerómetro del móvil: ángulo del ejercicio y conteo automático de
+  # repeticiones (Android e iOS; en Windows se usa el modo manual).
+  sensors_plus: ^7.1.1
 
   # Estado (Bloque A)
   provider: ^6.1.1
